@@ -7,6 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const AngularCompilerPlugin = require('@ngtools/webpack').AngularCompilerPlugin;
 const pjson = require('./package.json');
+const SubresourceIntegrityPlugin = require('webpack-subresource-integrity');
 
 if (process.env.NODE_ENV == null) {
     process.env.NODE_ENV = 'development';
@@ -110,6 +111,9 @@ const plugins = [
             'CACHE_TAG': JSON.stringify(Math.random().toString(36).substring(7)),
         }
     }),
+    new SubresourceIntegrityPlugin({
+        hashFuncNames: ['sha384']
+    })
 ];
 
 if (ENV === 'production') {
@@ -179,6 +183,7 @@ const config = {
     output: {
         filename: '[name].[hash].js',
         path: path.resolve(__dirname, 'build'),
+        crossOriginLoading: 'anonymous',
     },
     module: { rules: moduleRules },
     plugins: plugins,
