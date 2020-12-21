@@ -313,12 +313,12 @@
                     <div class="row">
                         <div class="col-6 form-group">
                             <label for="idEmail">{{'email' | i18n}}</label>
-                            <input id="idEmail" class="form-control" type="text" name="Identity.Email"
+                            <input id="idEmail" class="form-control" type="email" name="Identity.Email"
                                 [(ngModel)]="cipher.identity.email" appInputVerbatim [disabled]="cipher.isDeleted">
                         </div>
                         <div class="col-6 form-group">
                             <label for="idPhone">{{'phone' | i18n}}</label>
-                            <input id="idPhone" class="form-control" type="text" name="Identity.Phone"
+                            <input id="idPhone" class="form-control" type="tel" name="Identity.Phone"
                                 [(ngModel)]="cipher.identity.phone" [disabled]="cipher.isDeleted">
                         </div>
                     </div>
