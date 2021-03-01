@@ -96,6 +96,8 @@ import { Permissions } from 'jslib/enums/permissions';
 import { EmergencyAccessViewComponent } from './settings/emergency-access-view.component';
 import { EmergencyAccessComponent } from './settings/emergency-access.component';
 
+import { DefaultUsernamesComponent } from './settings/default-usernames.component';
+
 const routes: Routes = [
     {
         path: '',
@@ -175,6 +177,7 @@ const routes: Routes = [
                     { path: 'account', component: AccountComponent, data: { titleId: 'myAccount' } },
                     { path: 'options', component: OptionsComponent, data: { titleId: 'options' } },
                     { path: 'domain-rules', component: DomainRulesComponent, data: { titleId: 'domainRules' } },
+                    { path: 'default-usernames', component: DefaultUsernamesComponent, data: { titleId: 'defaultUsernames' } },
                     { path: 'two-factor', component: TwoFactorSetupComponent, data: { titleId: 'twoStepLogin' } },
                     { path: 'premium', component: PremiumComponent, data: { titleId: 'goPremium' } },
                     { path: 'billing', component: UserBillingComponent, data: { titleId: 'billing' } },

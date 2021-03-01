@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { CipherType } from 'jslib/enums/cipherType';
 import { EventType } from 'jslib/enums/eventType';
 
+import { ApiService } from 'jslib/abstractions/api.service';
 import { AuditService } from 'jslib/abstractions/audit.service';
 import { CipherService } from 'jslib/abstractions/cipher.service';
 import { CollectionService } from 'jslib/abstractions/collection.service';
@@ -35,6 +36,7 @@ export class AddEditComponent extends BaseAddEditComponent {
     hasPasswordHistory = false;
     viewingPasswordHistory = false;
     viewOnly = false;
+    defaultUsernames: string[] = [];
 
     protected totpInterval: number;
 
@@ -44,7 +46,7 @@ export class AddEditComponent extends BaseAddEditComponent {
         userService: UserService, collectionService: CollectionService,
         protected totpService: TotpService, protected passwordGenerationService: PasswordGenerationService,
         protected messagingService: MessagingService, eventService: EventService,
-        protected policyService: PolicyService) {
+        protected policyService: PolicyService, protected apiService: ApiService) {
         super(cipherService, folderService, i18nService, platformUtilsService, auditService, stateService,
             userService, collectionService, messagingService, eventService, policyService);
     }
@@ -66,6 +68,12 @@ export class AddEditComponent extends BaseAddEditComponent {
             this.totpInterval = window.setInterval(async () => {
                 await this.totpTick(interval);
             }, 1000);
+        }
+
+        const response = await this.apiService.getSettingsDefaultUsernames();
+        if (response.defaultUsernames != null) {
+            this.defaultUsernames = response.defaultUsernames;
+            this.defaultUsernames.unshift('');
         }
     }
 

@@ -3628,5 +3628,26 @@
   "textHiddenByDefault": {
     "message": "Ukryj tekst podczas dostępu do wysyłki",
     "description": "'Send' is a noun and the name of a feature called 'Bitwarden Send'. It should not be translated."
+  },
+  "defaultUsernames": {
+    "message": "Domyślne loginy"
+  },
+  "newDefaultUsername": {
+    "message": "Nowy domyślny login"
+  },
+  "defaultUsernameX": {
+    "message": "Domyślny login $INDEX$",
+    "placeholders": {
+      "index": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "defaultUsernamesUpdated": {
+    "message": "Domyślne loginy zaktualizowane"
+  },
+  "defaultUsernamesDesc": {
+    "message": "Jeśli chcesz, żeby Bitwarden przechowywał twóje najczęściej uzywane loginy/nazwy uzytkowników, i sugerował je podczas tworzenia nowego Loginu, wpisz je tutaj."
   }
 }

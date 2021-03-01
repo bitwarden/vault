@@ -3628,5 +3628,26 @@
   "textHiddenByDefault": {
     "message": "When accessing the Send, hide the text by default",
     "description": "'Send' is a noun and the name of a feature called 'Bitwarden Send'. It should not be translated."
+  },
+  "defaultUsernames": {
+    "message": "Default Usernames"
+  },
+  "newDefaultUsername": {
+    "message": "New Default Username"
+  },
+  "defaultUsernameX": {
+    "message": "Default Username $INDEX$",
+    "placeholders": {
+      "index": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "defaultUsernamesUpdated": {
+    "message": "Default usernames updated"
+  },
+  "defaultUsernamesDesc": {
+    "message": "If you want Bitwarden to store your most used logins/usernames, and suggest them when creating new login in Bitwarden, then put them here."
   }
 }

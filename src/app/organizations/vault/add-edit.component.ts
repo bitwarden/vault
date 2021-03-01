@@ -36,11 +36,11 @@ export class AddEditComponent extends BaseAddEditComponent {
         auditService: AuditService, stateService: StateService,
         userService: UserService, collectionService: CollectionService,
         totpService: TotpService, passwordGenerationService: PasswordGenerationService,
-        private apiService: ApiService, messagingService: MessagingService,
+        protected apiService: ApiService, messagingService: MessagingService,
         eventService: EventService, policyService: PolicyService) {
         super(cipherService, folderService, i18nService, platformUtilsService, auditService, stateService,
             userService, collectionService, totpService, passwordGenerationService, messagingService,
-            eventService, policyService);
+            eventService, policyService, apiService);
     }
 
     protected allowOwnershipAssignment() {

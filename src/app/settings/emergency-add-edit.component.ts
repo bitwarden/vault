@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+import { ApiService } from 'jslib/abstractions/api.service';
 import { AuditService } from 'jslib/abstractions/audit.service';
 import { CipherService } from 'jslib/abstractions/cipher.service';
 import { CollectionService } from 'jslib/abstractions/collection.service';
@@ -31,10 +32,11 @@ export class EmergencyAddEditComponent extends BaseAddEditComponent {
         auditService: AuditService, stateService: StateService,
         userService: UserService, collectionService: CollectionService,
         totpService: TotpService, passwordGenerationService: PasswordGenerationService,
-        messagingService: MessagingService, eventService: EventService, policyService: PolicyService) {
+        messagingService: MessagingService, eventService: EventService, policyService: PolicyService,
+        apiService: ApiService) {
         super(cipherService, folderService, i18nService, platformUtilsService, auditService, stateService,
             userService, collectionService, totpService, passwordGenerationService, messagingService,
-            eventService, policyService);
+            eventService, policyService, apiService);
     }
 
     async load() {
