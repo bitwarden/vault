@@ -224,11 +224,28 @@ export class WebPlatformUtilsService implements PlatformUtilsService {
 
     async showPasswordDialog(title: string, body: string, passwordValidation: (value: string) => Promise<boolean>):
         Promise<boolean> {
+
+        const html = `
+        ${body}
+        <div class="form-group mt-2">
+            <label for="masterPassword">${this.i18nService.t('masterPass')}</label>
+            <div class="d-flex">
+                <input id="masterPassword" type="password" name="MasterPassword" class="text-monospace form-control"
+                required autocomplete="off">
+                <button id="toggleVisibility" type="button" class="ml-1 btn btn-link" title="${this.i18nService.t('toggleVisibility')}">
+                    <i class="fa fa-lg fa-eye" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+        `;
+
+        let el: HTMLElement;
+        let visible = false;
+
         const result = await Swal.fire({
             heightAuto: false,
             titleText: title,
-            input: 'password',
-            text: body,
+            html: html,
             confirmButtonText: this.i18nService.t('ok'),
             showCancelButton: true,
             cancelButtonText: this.i18nService.t('cancel'),
@@ -236,12 +253,32 @@ export class WebPlatformUtilsService implements PlatformUtilsService {
                 autocapitalize: 'off',
                 autocorrect: 'off',
             },
-            inputValidator: async (value: string): Promise<any> => {
-                if (await passwordValidation(value)) {
-                    return false;
+            preConfirm: async (): Promise<any> => {
+                const input = el.querySelector('#masterPassword') as any;
+                if (await passwordValidation(input.value)) {
+                    return true;
                 }
 
-                return this.i18nService.t('invalidMasterPassword');
+                return Swal.showValidationMessage(this.i18nService.t('invalidMasterPassword'));
+            },
+            didOpen: el2 => {
+                el = el2;
+
+                const input = (el.querySelector('#masterPassword') as HTMLInputElement);
+                input.focus();
+                input.onkeydown = (event: KeyboardEvent) => {
+                    if (event.key === 'Enter') {
+                        Swal.clickConfirm();
+                    }
+                };
+
+                const icon = el.querySelector('#toggleVisibility i');
+                (el.querySelector('#toggleVisibility') as HTMLElement).onclick = () => {
+                    visible = !visible;
+                    icon.classList.remove('fa-eye', 'fa-eye-slash');
+                    icon.classList.add(visible ? 'fa-eye-slash' : 'fa-eye');
+                    input.type = visible ? 'text' : 'password';
+                };
             },
         });
 
