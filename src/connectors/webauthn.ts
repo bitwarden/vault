@@ -7,7 +7,8 @@ require('./webauthn.scss');
 document.addEventListener('DOMContentLoaded', () => {
     init();
 
-    const text = getQsParam('btnText');
+    parseDataParameter();
+    const text = data.btnText;
     if (text) {
         const button = document.getElementById('webauthn-button');
         button.innerText = decodeURI(text);
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+let data: any;
 let parentUrl: string = null;
 let parentOrigin: string = null;
 let stopWebAuthn = false;
@@ -27,6 +29,20 @@ function init() {
     info('ready');
 }
 
+function parseDataParameter() {
+    if (data) {
+        return;
+    }
+
+    try {
+        data = JSON.parse(b64Decode(getQsParam('data')));
+    }
+    catch (e) {
+        error('Cannot parse data.');
+        return;
+    }
+}
+
 function start() {
     sentSuccess = false;
 
@@ -35,7 +51,7 @@ function start() {
         return;
     }
 
-    const data = getQsParam('data');
+    parseDataParameter();
     if (!data) {
         error('No data.');
         return;
@@ -51,11 +67,11 @@ function start() {
     }
 
     try {
-        const jsonString = b64Decode(data);
+        const jsonString = data.data;
         obj = parseWebauthnJson(jsonString);
     }
     catch (e) {
-        error('Cannot parse data.');
+        error('Cannot parse webauthn data.');
         return;
     }
 
