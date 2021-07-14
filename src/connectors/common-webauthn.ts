@@ -21,12 +21,6 @@ export function buildDataString(assertedCredential: PublicKeyCredential) {
     return JSON.stringify(data);
 }
 
-export function b64Decode(str: string) {
-    return decodeURIComponent(Array.prototype.map.call(atob(str), (c: string) => {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-}
-
 export function parseWebauthnJson(jsonString: string) {
     const json = JSON.parse(jsonString);
 
