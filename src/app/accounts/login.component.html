@@ -36,6 +36,7 @@
                         <label class="form-check-label" for="rememberEmail">{{'rememberEmail' | i18n}}</label>
                     </div>
                     <hr>
+                    <div [hidden]="!showCaptcha()"><iframe id="hcaptcha_iframe" height=80></iframe></div>
                     <div class="d-flex">
                         <button type="submit" class="btn btn-primary btn-block btn-submit" [disabled]="form.loading">
                             <span>
