@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
 (window as any).captchaError = captchaError;
 
 let parentUrl: string = null;
-let locale: string = null;
 let parentOrigin: string = null;
 let sentSuccess = false;
 
@@ -31,8 +30,6 @@ async function start() {
         error('No data.');
         return;
     }
-
-    locale = getQsParam('locale')
 
     parentUrl = getQsParam('parent');
     if (!parentUrl) {
@@ -55,8 +52,8 @@ async function start() {
     let src = 'https://hcaptcha.com/1/api.js?render=explicit';
 
     // Set language code
-    if (locale) {
-        src += `&hl=${locale ?? 'en'}`;
+    if (decodedData.locale) {
+        src += `&hl=${decodedData.locale ?? 'en'}`;
     }
 
     const script = document.createElement('script');
@@ -72,7 +69,6 @@ async function start() {
     }
 
     hcaptcha.render('captcha', {
-        languageCode: decodedData.locale,
         sitekey: decodedData.siteKey,
         callback: 'captchaSuccess',
         'error-callback': 'captchaError',
