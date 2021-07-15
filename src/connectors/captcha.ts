@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 let parentUrl: string = null;
 let parentOrigin: string = null;
+let callbackUri: string = null;
 let sentSuccess = false;
 
 async function init() {
@@ -48,6 +49,7 @@ async function start() {
         error('Cannot parse data.');
         return;
     }
+    callbackUri = decodedData.callbackUri;
 
     let src = 'https://hcaptcha.com/1/api.js?render=explicit';
 
@@ -77,6 +79,9 @@ async function start() {
 
 function captchaSuccess(response: string) {
     success(response);
+    if (callbackUri) {
+        document.location.replace(callbackUri + '?token=' + encodeURIComponent(response));
+    }
 }
 
 function captchaError() {
