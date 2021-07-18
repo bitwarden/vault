@@ -439,6 +439,7 @@ input[type="search"]::-webkit-search-cancel-button {
         width: 45px;
         max-width: 45px;
         text-align: center;
+        line-height: 0;
 
         img {
             @extend .rounded;
@@ -450,6 +451,7 @@ input[type="search"]::-webkit-search-cancel-button {
     td.table-list-checkbox {
         width: 35px;
         max-width: 35px;
+        line-height: 0;
     }
 
     td.table-list-strike {
@@ -782,6 +784,11 @@ app-user-billing {
     &:not(.mt-2) {
         @extend .mt-3;
     }
+}
+
+.form-check-label {
+    margin: 0.3rem 0 0 0.3rem;
+    line-height: 16px;
 }
 
 .form-inline {
