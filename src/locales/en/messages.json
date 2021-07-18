@@ -41,7 +41,10 @@
     "message": "New Password"
   },
   "passphrase": {
-    "message": "Passphrase"
+    "message": "Passphrase (word count)"
+  },
+  "passphrase_limited": {
+    "message": "Passphrase (character limited)"
   },
   "notes": {
     "message": "Notes"
@@ -870,11 +873,18 @@
   "length": {
     "message": "Length"
   },
+  "maxLength": {
+    "message": "Max. length"
+  },
   "numWords": {
     "message": "Number of Words"
   },
   "wordSeparator": {
     "message": "Word Separator"
+  },
+  "shortWords": {
+    "message": "Only short words",
+    "description": "Limit the character count per word to 5."
   },
   "capitalize": {
     "message": "Capitalize",
