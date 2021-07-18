@@ -44,9 +44,12 @@ jobs:
         run: |
           git config user.name = "GitHub Action Bot"
           git config user.email = "<>"
+          git config --global url."https://github.com/".insteadOf ssh://git@github.com/
+          git config --global url."https://".insteadOf ssh://
 
       - name: Install and Build
         run: |
+          npm run sub:init
           npm ci
           npm run dist
 
