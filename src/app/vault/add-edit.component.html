@@ -1,4 +1,5 @@
-<div class="modal fade" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="cipherAddEditTitle">
+<div class="modal fade" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="cipherAddEditTitle"
+     data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <form class="modal-content" #form (ngSubmit)="submit()" [appApiAction]="formPromise" ngNativeValidate
             autocomplete="off">
