@@ -9,6 +9,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const AngularCompilerPlugin = require('@ngtools/webpack').AngularCompilerPlugin;
 const pjson = require('./package.json');
 const config = require('./config.js');
+const WorkerPlugin = require('worker-plugin');
 
 const ENV = process.env.ENV == null ? 'development' : process.env.ENV;
 const NODE_ENV = process.env.NODE_ENV == null ? 'development' : process.env.NODE_ENV;
@@ -18,7 +19,7 @@ config.log(envConfig);
 
 const moduleRules = [
     {
-        test: /\.ts$/,
+        test: /(?<!\.worker)\.ts$/,
         enforce: 'pre',
         loader: 'tslint-loader',
     },
@@ -145,6 +146,15 @@ const plugins = [
         entryModule: 'src/app/app.module#AppModule',
         sourceMap: true,
     }),
+    new WorkerPlugin({
+        plugins: [
+            new AngularCompilerPlugin({
+                tsConfigPath: 'jslib/common/tsconfig.worker.json',
+                sourceMap: true
+            })
+        ],
+        globalObject: 'self'
+    })
 ];
 
 // ref: https://webpack.js.org/configuration/dev-server/#devserver

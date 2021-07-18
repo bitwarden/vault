@@ -31,7 +31,8 @@
   "files": [
     "src/app/polyfills.ts",
     "src/app/main.ts",
-    "bitwarden_license/src/app/main.ts"
+    "bitwarden_license/src/app/main.ts",
+    "jslib/common/src/workers/crypto.worker.ts"
   ],
   "include": [
     "src/connectors/*.ts",
