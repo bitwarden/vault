@@ -2,18 +2,18 @@
     <h1>{{'people' | i18n}}</h1>
     <div class="ml-auto d-flex">
         <div class="btn-group btn-group-sm" role="group">
-            <button type="button" class="btn btn-outline-secondary" [ngClass]="{active: status == null}"
+            <button type="button" class="btn btn-secondary" [ngClass]="{active: status == null}"
                 (click)="filter(null)">
                 {{'all' | i18n}}
                 <span class="badge badge-pill badge-info" *ngIf="allCount">{{allCount}}</span>
             </button>
-            <button type="button" class="btn btn-outline-secondary"
+            <button type="button" class="btn btn-secondary"
                 [ngClass]="{active: status == organizationUserStatusType.Invited}"
                 (click)="filter(organizationUserStatusType.Invited)">
                 {{'invited' | i18n}}
                 <span class="badge badge-pill badge-info" *ngIf="invitedCount">{{invitedCount}}</span>
             </button>
-            <button type="button" class="btn btn-outline-secondary"
+            <button type="button" class="btn btn-secondary"
                 [ngClass]="{active: status == organizationUserStatusType.Accepted}"
                 (click)="filter(organizationUserStatusType.Accepted)">
                 {{'accepted' | i18n}}
@@ -22,11 +22,11 @@
         </div>
         <div class="ml-3">
             <label class="sr-only" for="search">{{'search' | i18n}}</label>
-            <input type="search" class="form-control form-control-sm" id="search" placeholder="{{'search' | i18n}}"
+            <input type="search" class="form-control form-control-sm" id="search" placeholder="&#xf002;  {{'search' | i18n}}"
                 [(ngModel)]="searchText">
         </div>
         <div class="dropdown ml-3" appListDropdown>
-            <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="bulkActionsButton"
+            <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="bulkActionsButton"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" appA11yTitle="{{'options' | i18n}}">
                 <i class="fa fa-cog" aria-hidden="true"></i>
             </button>
@@ -55,7 +55,7 @@
                 </button>
             </div>
         </div>
-        <button type="button" class="btn btn-sm btn-outline-primary ml-3" (click)="invite()">
+        <button type="button" class="btn btn-sm btn-primary ml-3" (click)="invite()">
             <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
             {{'inviteUser' | i18n}}
         </button>
@@ -110,7 +110,7 @@
                     </td>
                     <td class="table-list-options">
                         <div class="dropdown" appListDropdown>
-                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                            <button class="btn btn-secondary dropdown-toggle" type="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                 appA11yTitle="{{'options' | i18n}}">
                                 <i class="fa fa-cog fa-lg" aria-hidden="true"></i>

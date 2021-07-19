@@ -26,11 +26,14 @@ export class OptionsComponent implements OnInit {
     disableIcons: boolean;
     enableGravatars: boolean;
     enableFullWidth: boolean;
+    theme: string = null;
     locale: string;
     vaultTimeouts: any[];
     localeOptions: any[];
+    themeOptions: any[];
 
     private startingLocale: string;
+    private currentTheme: string;
 
     constructor(private storageService: StorageService, private stateService: StateService,
         private i18nService: I18nService, private toasterService: ToasterService,
@@ -60,6 +63,11 @@ export class OptionsComponent implements OnInit {
         localeOptions.sort(Utils.getSortFunction(i18nService, 'name'));
         localeOptions.splice(0, 0, { name: i18nService.t('default'), value: null });
         this.localeOptions = localeOptions;
+        this.themeOptions = [
+            { name: i18nService.t('themeDefault'), value: null },
+            { name: i18nService.t('themeLight'), value: 'light' },
+            { name: i18nService.t('themeDark'), value: 'dark' },
+        ];
     }
 
     async ngOnInit() {
@@ -69,6 +77,7 @@ export class OptionsComponent implements OnInit {
         this.enableGravatars = await this.storageService.get<boolean>('enableGravatars');
         this.enableFullWidth = await this.storageService.get<boolean>('enableFullWidth');
         this.locale = this.startingLocale = await this.storageService.get<string>(ConstantsService.localeKey);
+        this.theme = this.currentTheme = await this.storageService.get<string>(ConstantsService.themeKey);
     }
 
     async submit() {
@@ -80,6 +89,16 @@ export class OptionsComponent implements OnInit {
         await this.stateService.save('enableGravatars', this.enableGravatars);
         await this.storageService.save('enableFullWidth', this.enableFullWidth);
         this.messagingService.send('setFullWidth');
+        if (this.theme !== this.currentTheme) {
+            let effectiveTheme = this.currentTheme = this.theme;
+            await this.storageService.save('theme', this.theme);
+            const htmlEl = window.document.documentElement;
+            htmlEl.classList.remove('theme_dark', 'theme_light');
+            if (this.theme == null) {
+                effectiveTheme = await this.platformUtilsService.getDefaultSystemTheme();
+            }
+            htmlEl.classList.add('theme_' + effectiveTheme);
+        }
         await this.storageService.save(ConstantsService.localeKey, this.locale);
         if (this.locale !== this.startingLocale) {
             window.location.reload();

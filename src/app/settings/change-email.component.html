@@ -32,7 +32,7 @@
         <span *ngIf="!tokenSent">{{'continue' | i18n}}</span>
         <span *ngIf="tokenSent">{{'changeEmail' | i18n}}</span>
     </button>
-    <button type="button" class="btn btn-outline-secondary" *ngIf="tokenSent" (click)="reset()">
+    <button type="button" class="btn btn-secondary" *ngIf="tokenSent" (click)="reset()">
         {{'cancel' | i18n}}
     </button>
 </form>

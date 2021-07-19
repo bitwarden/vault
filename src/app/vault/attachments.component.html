@@ -28,7 +28,7 @@
                                             <i class="fa fa-exclamation-triangle text-warning"
                                                 title="{{'attachmentFixDesc' | i18n}}" aria-hidden="true"></i>
                                             <span class="sr-only">{{'attachmentFixDesc' | i18n}}</span></a>
-                                        <button type="button" class="btn btn-outline-primary btn-sm m-0 py-0 px-2"
+                                        <button type="button" class="btn btn-primary btn-sm m-0 py-0 px-2"
                                             (click)="reupload(a)" #reuploadBtn [appApiAction]="reuploadPromises[a.id]"
                                             [disabled]="reuploadBtn.loading">{{'fix' | i18n}}</button>
                                     </div>
@@ -36,7 +36,7 @@
                                 <small>{{a.sizeName}}</small>
                             </td>
                             <td class="table-list-options" *ngIf="!viewOnly">
-                                <button class="btn btn-outline-danger" type="button" appStopClick
+                                <button class="btn btn-danger" type="button" appStopClick
                                     appA11yTitle="{{'delete' | i18n}}" (click)="delete(a)" #deleteBtn
                                     [appApiAction]="deletePromises[a.id]" [disabled]="deleteBtn.loading">
                                     <i class="fa fa-trash-o fa-lg fa-fw" [hidden]="deleteBtn.loading"
@@ -60,7 +60,7 @@
                     <i class="fa fa-spinner fa-spin" title="{{'loading' | i18n}}" aria-hidden="true"></i>
                     <span>{{'save' | i18n}}</span>
                 </button>
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">{{'close'
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'close'
                     | i18n}}</button>
             </div>
         </form>

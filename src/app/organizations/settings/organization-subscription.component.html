@@ -16,7 +16,7 @@
         {{'subscriptionCanceled' | i18n}}</app-callout>
     <app-callout type="warning" title="{{'pendingCancellation' | i18n}}" *ngIf="subscriptionMarkedForCancel">
         <p>{{'subscriptionPendingCanceled' | i18n}}</p>
-        <button #reinstateBtn type="button" class="btn btn-outline-secondary btn-submit" (click)="reinstate()"
+        <button #reinstateBtn type="button" class="btn btn-secondary btn-submit" (click)="reinstate()"
             [appApiAction]="reinstatePromise" [disabled]="reinstateBtn.loading">
             <i class="fa fa-spinner fa-spin" title="{{'loading' | i18n}}" aria-hidden="true"></i>
             <span>{{'reinstateSubscription' | i18n}}</span>
@@ -72,10 +72,10 @@
     </div>
     <ng-container *ngIf="selfHosted">
         <div>
-            <button type="button" class="btn btn-outline-secondary" (click)="updateLicense()">
+            <button type="button" class="btn btn-secondary" (click)="updateLicense()">
                 {{'updateLicense' | i18n}}
             </button>
-            <a href="https://vault.bitwarden.com" target="_blank" rel="noopener" class="btn btn-outline-secondary">
+            <a href="https://vault.bitwarden.com" target="_blank" rel="noopener" class="btn btn-secondary">
                 {{'manageSubscription' | i18n}}
             </a>
         </div>
@@ -91,14 +91,14 @@
     </ng-container>
     <ng-container *ngIf="!selfHosted">
         <div class="d-flex">
-            <button type="button" class="btn btn-outline-secondary" (click)="changePlan()" *ngIf="!showChangePlan">
+            <button type="button" class="btn btn-secondary" (click)="changePlan()" *ngIf="!showChangePlan">
                 {{'changeBillingPlan' | i18n}}
             </button>
-            <button type="button" class="btn btn-outline-secondary ml-1" (click)="downloadLicense()"
+            <button type="button" class="btn btn-secondary ml-1" (click)="downloadLicense()"
                 *ngIf="canDownloadLicense" [disabled]="showDownloadLicense">
                 {{'downloadLicense' | i18n}}
             </button>
-            <button #cancelBtn type="button" class="btn btn-outline-danger btn-submit ml-auto" (click)="cancel()"
+            <button #cancelBtn type="button" class="btn btn-danger btn-submit ml-auto" (click)="cancel()"
                 [appApiAction]="cancelPromise" [disabled]="cancelBtn.loading"
                 *ngIf="subscription && !subscription.cancelled && !subscriptionMarkedForCancel">
                 <i class="fa fa-spinner fa-spin" title="{{'loading' | i18n}}" aria-hidden="true"></i>
@@ -116,10 +116,10 @@
         <ng-container *ngIf="subscription && canAdjustSeats && !subscription.cancelled && !subscriptionMarkedForCancel">
             <div class="mt-3">
                 <div class="d-flex" *ngIf="!showAdjustSeats">
-                    <button type="button" class="btn btn-outline-secondary" (click)="adjustSeats(true)">
+                    <button type="button" class="btn btn-secondary" (click)="adjustSeats(true)">
                         {{'addSeats' | i18n}}
                     </button>
-                    <button type="button" class="btn btn-outline-secondary ml-1" (click)="adjustSeats(false)">
+                    <button type="button" class="btn btn-secondary ml-1" (click)="adjustSeats(false)">
                         {{'removeSeats' | i18n}}
                     </button>
                 </div>
@@ -138,10 +138,10 @@
         <ng-container *ngIf="subscription && !subscription.cancelled && !subscriptionMarkedForCancel">
             <div class="mt-3">
                 <div class="d-flex" *ngIf="!showAdjustStorage">
-                    <button type="button" class="btn btn-outline-secondary" (click)="adjustStorage(true)">
+                    <button type="button" class="btn btn-secondary" (click)="adjustStorage(true)">
                         {{'addStorage' | i18n}}
                     </button>
-                    <button type="button" class="btn btn-outline-secondary ml-1" (click)="adjustStorage(false)">
+                    <button type="button" class="btn btn-secondary ml-1" (click)="adjustStorage(false)">
                         {{'removeStorage' | i18n}}
                     </button>
                 </div>

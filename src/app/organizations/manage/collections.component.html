@@ -3,10 +3,10 @@
     <div class="ml-auto d-flex">
         <div>
             <label class="sr-only" for="search">{{'search' | i18n}}</label>
-            <input type="search" class="form-control form-control-sm" id="search" placeholder="{{'search' | i18n}}"
+            <input type="search" class="form-control form-control-sm" id="search" placeholder="&#xf002;  {{'search' | i18n}}"
                 [(ngModel)]="searchText">
         </div>
-        <button type="button" class="btn btn-sm btn-outline-primary ml-3" (click)="add()">
+        <button type="button" class="btn btn-sm btn-primary ml-3" (click)="add()">
             <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
             {{'newCollection' | i18n}}
         </button>
@@ -28,7 +28,7 @@
                 </td>
                 <td class="table-list-options">
                     <div class="dropdown" appListDropdown>
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false" appA11yTitle="{{'options' | i18n}}">
                             <i class="fa fa-cog fa-lg" aria-hidden="true"></i>
                         </button>

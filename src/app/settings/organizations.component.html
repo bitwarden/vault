@@ -18,7 +18,7 @@
         </ul>
         <p *ngIf="!organizations || !organizations.length">{{'noOrganizationsList' | i18n}}</p>
     </ng-container>
-    <a href="#" routerLink="/settings/create-organization" class="btn btn-block btn-outline-primary">
+    <a href="#" routerLink="/settings/create-organization" class="btn btn-block btn-primary">
         <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
         {{'newOrganization' | i18n}}
     </a>
@@ -34,7 +34,7 @@
                 </ng-container>
             </small>
         </h1>
-        <a href="#" routerLink="/settings/create-organization" class="btn btn-sm btn-outline-primary ml-auto"
+        <a href="#" routerLink="/settings/create-organization" class="btn btn-sm btn-primary ml-auto"
             *ngIf="!loaded || (organizations && organizations.length)">
             <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
             {{'newOrganization' | i18n}}
@@ -47,7 +47,7 @@
     <ng-container *ngIf="loaded">
         <ng-container *ngIf="!organizations || !organizations.length">
             <p>{{'noOrganizationsList' | i18n}}</p>
-            <a href="#" routerLink="/settings/create-organization" class="btn btn-outline-primary">
+            <a href="#" routerLink="/settings/create-organization" class="btn btn-primary">
                 <i class="fa fa-plus fa-fw" aria-hidden="true"></i>
                 {{'newOrganization' | i18n}}
             </a>
@@ -73,7 +73,7 @@
                     </td>
                     <td class="table-list-options">
                         <div class="dropdown" appListDropdown>
-                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                            <button class="btn btn-secondary dropdown-toggle" type="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                 appA11yTitle="{{'options' | i18n}}">
                                 <i class="fa fa-cog fa-lg" aria-hidden="true"></i>

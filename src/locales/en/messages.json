@@ -3988,6 +3988,21 @@
   "removeUsersWarning": {
     "message": "Are you sure you want to remove the following users? The process may take a few seconds to complete and cannot be interrupted or canceled."
   },
+  "theme": {
+    "message": "Theme"
+  },
+  "themeDesc": {
+    "message": "Choose a theme for your web vault."
+  },
+  "themeDefault": {
+    "message": "Default"
+  },
+  "themeDark": {
+    "message": "Dark"
+  },
+  "themeLight": {
+    "message": "Light"
+  },
   "confirmSelected": {
     "message": "Confirm Selected"
   },

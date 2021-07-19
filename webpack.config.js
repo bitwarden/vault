@@ -28,7 +28,7 @@ const moduleRules = [
     },
     {
         test: /.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-        exclude: /loading.svg/,
+        exclude: /loading(|-white).svg/,
         use: [{
             loader: 'file-loader',
             options: {

@@ -169,7 +169,11 @@ export function initFactory(): Function {
         htmlEl.classList.add('locale_' + i18nService.translationLocale);
         let theme = await storageService.get<string>(ConstantsService.themeKey);
         if (theme == null) {
-            theme = 'light';
+            theme = await platformUtilsService.getDefaultSystemTheme();
+            platformUtilsService.onDefaultSystemThemeChange(sysTheme => {
+                htmlEl.classList.remove('theme_light', 'theme_dark');
+                htmlEl.classList.add('theme_' + sysTheme);
+            });
         }
         htmlEl.classList.add('theme_' + theme);
         stateService.save(ConstantsService.disableFaviconKey,

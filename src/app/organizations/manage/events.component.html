@@ -13,14 +13,14 @@
                 (change)="dirtyDates = true">
         </div>
         <form #refreshForm [appApiAction]="refreshPromise" class="d-inline">
-            <button type="button" class="btn btn-sm btn-outline-primary ml-3" (click)="loadEvents(true)"
+            <button type="button" class="btn btn-sm btn-primary ml-3" (click)="loadEvents(true)"
                 [disabled]="loaded && refreshForm.loading">
                 <i class="fa fa-refresh fa-fw" aria-hidden="true" [ngClass]="{'fa-spin': loaded && refreshForm.loading}"></i>
                 {{'refresh' | i18n}}
             </button>
         </form>
         <form #exportForm [appApiAction]="exportPromise" class="d-inline">
-            <button type="button" class="btn btn-sm btn-outline-primary btn-submit manual ml-3"
+            <button type="button" class="btn btn-sm btn-primary btn-submit manual ml-3"
                 [ngClass]="{loading:exportForm.loading}" (click)="exportEvents()"
                 [disabled]="loaded && exportForm.loading || dirtyDates">
                 <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>

@@ -23,7 +23,7 @@
                     <app-vault-bulk-actions [ciphersComponent]="ciphersComponent" [modal]="modal" [deleted]="deleted"
                         [organization]="organization">
                     </app-vault-bulk-actions>
-                    <button type="button" class="btn btn-outline-primary btn-sm ml-auto" (click)="addCipher()"
+                    <button type="button" class="btn btn-primary btn-sm ml-auto" (click)="addCipher()"
                         *ngIf="!deleted">
                         <i class="fa fa-plus fa-fw" aria-hidden="true"></i>{{'addItem' | i18n}}
                     </button>

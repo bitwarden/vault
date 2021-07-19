@@ -20,18 +20,18 @@
 <p>
     {{'userApiKeyDesc' | i18n}}
 </p>
-<button type="button" class="btn btn-outline-secondary" (click)="viewUserApiKey()">{{'viewApiKey' | i18n}}</button>
-<button type="button" class="btn btn-outline-secondary" (click)="rotateUserApiKey()">{{'rotateApiKey' | i18n}}</button>
+<button type="button" class="btn btn-secondary" (click)="viewUserApiKey()">{{'viewApiKey' | i18n}}</button>
+<button type="button" class="btn btn-secondary" (click)="rotateUserApiKey()">{{'rotateApiKey' | i18n}}</button>
 <div class="secondary-header text-danger border-0 mb-0">
     <h1>{{'dangerZone' | i18n}}</h1>
 </div>
 <div class="card border-danger">
     <div class="card-body">
         <p>{{'dangerZoneDesc' | i18n}}</p>
-        <button type="button" class="btn btn-outline-danger"
+        <button type="button" class="btn btn-danger"
             (click)="deauthorizeSessions()">{{'deauthorizeSessions' | i18n}}</button>
-        <button type="button" class="btn btn-outline-danger" (click)="purgeVault()">{{'purgeVault' | i18n}}</button>
-        <button type="button" class="btn btn-outline-danger"
+        <button type="button" class="btn btn-danger" (click)="purgeVault()">{{'purgeVault' | i18n}}</button>
+        <button type="button" class="btn btn-danger"
             (click)="deleteAccount()">{{'deleteAccount' | i18n}}</button>
     </div>
 </div>

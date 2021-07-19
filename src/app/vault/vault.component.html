@@ -23,7 +23,7 @@
                 <div class="ml-auto d-flex">
                     <app-vault-bulk-actions [ciphersComponent]="ciphersComponent" [modal]="modal" [deleted]="deleted">
                     </app-vault-bulk-actions>
-                    <button type="button" class="btn btn-outline-primary btn-sm" (click)="addCipher()" *ngIf="!deleted">
+                    <button type="button" class="btn btn-primary btn-sm" (click)="addCipher()" *ngIf="!deleted">
                         <i class="fa fa-plus fa-fw" aria-hidden="true"></i>{{'addItem' | i18n}}
                     </button>
                 </div>
@@ -44,7 +44,7 @@
                 </div>
                 <div class="card-body">
                     <p>{{'updateEncryptionKeyShortDesc' | i18n}}</p>
-                    <button class="btn btn-block btn-outline-secondary" type="button" (click)="updateKey()">
+                    <button class="btn btn-block btn-secondary" type="button" (click)="updateKey()">
                         {{'updateEncryptionKey' | i18n}}
                     </button>
                 </div>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="card-body">
                     <p>{{'updateBrowserDesc' | i18n}}</p>
-                    <a class="btn btn-block btn-outline-secondary" target="_blank"
+                    <a class="btn btn-block btn-secondary" target="_blank"
                         href="https://browser-update.org/update-browser.html" rel="noopener">
                         {{'updateBrowser' | i18n}}
                     </a>
@@ -68,7 +68,7 @@
                 </div>
                 <div class="card-body">
                     <p>{{'premiumUpgradeUnlockFeatures' | i18n}}</p>
-                    <a class="btn btn-block btn-outline-secondary" routerLink="/settings/premium">
+                    <a class="btn btn-block btn-secondary" routerLink="/settings/premium">
                         {{'goPremium' | i18n}}
                     </a>
                 </div>

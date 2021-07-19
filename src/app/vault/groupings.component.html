@@ -7,7 +7,7 @@
         </a>
     </div>
     <div class="card-body">
-        <input type="search" placeholder="{{searchPlaceholder || ('searchVault' | i18n)}}" id="search"
+        <input type="search" placeholder="&#xf002;  {{searchPlaceholder || ('searchVault' | i18n)}}" id="search"
             class="form-control" [(ngModel)]="searchText" (input)="searchTextChanged()" autocomplete="off" appAutofocus>
         <ul class="fa-ul card-ul">
             <li [ngClass]="{active: selectedAll}">

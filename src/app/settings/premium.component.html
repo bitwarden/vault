@@ -38,7 +38,7 @@
     </ul>
     <p class="text-lg" [ngClass]="{'mb-0':!selfHosted}">{{'premiumPrice' | i18n : (premiumPrice | currency:'$')}}</p>
     <a href="https://vault.bitwarden.com/#/settings/premium" target="_blank" rel="noopener"
-        class="btn btn-outline-secondary" *ngIf="selfHosted">
+        class="btn btn-secondary" *ngIf="selfHosted">
         {{'purchasePremium' | i18n}}
     </a>
 </app-callout>

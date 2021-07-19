@@ -1,0 +1,273 @@
+$primary: #175DDC;
+$primary-accent: #1252A3;
+$secondary: #CED4DA;
+$secondary-alt: #1A3B66;
+$success: #00A65A;
+$info: #555555;
+$warning: #BF7E16;
+$danger: #DD4B39;
+$white: #FFFFFF;
+$pending: $info;
+
+$theme-colors: (  
+    "primary-accent": $primary-accent,
+    "secondary-alt": $secondary-alt,
+);
+
+$body-bg: $white;
+$body-color: #333333;
+
+$font-family-sans-serif: 'Open Sans','Helvetica Neue',Helvetica,
+    Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol';
+
+$h1-font-size: 1.7rem;
+$h2-font-size: 1.3rem;
+$h3-font-size: 1rem;
+$h4-font-size: 1rem;
+$h5-font-size: 1rem;
+$h6-font-size: 1rem;
+
+$small-font-size: 90%;
+$font-size-lg: 1.15rem;
+$code-font-size: 100%;
+
+$navbar-padding-y: .75rem;
+$grid-gutter-width: 20px;
+$card-spacer-y: .6rem;
+
+$list-group-item-padding-y: .6rem;
+$list-group-active-color: $body-color;
+$list-group-active-bg: $white;
+$list-group-active-border-color: rgba(#000000, .125);
+
+$dropdown-link-color: $body-color;
+$dropdown-link-hover-bg: rgba(#000000, .06);
+$dropdown-link-active-color: $dropdown-link-color;
+$dropdown-link-active-bg: rgba(#000000, .1);
+$dropdown-item-padding-x: 1rem;
+
+$navbar-brand-font-size: 35px;
+$navbar-brand-height: 35px;
+$navbar-brand-padding-y: 0;
+$navbar-dark-color: rgba($white, .7);
+$navbar-dark-hover-color: rgba($white, .9);
+$navbar-nav-link-padding-x: 0.8rem;
+
+$input-bg: #FBFBFB;
+$input-focus-bg: $white;
+$input-disabled-bg: #E0E0E0;
+$input-placeholder-color: #B4B4B4;
+
+$table-accent-bg: rgba(#000000, .02);
+$table-hover-bg: rgba(#000000, .03);
+
+$modal-backdrop-opacity: 0.3;
+$btn-font-weight: 600;
+$lead-font-weight: normal;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 1px,
+  md: 2px,
+  lg: 3px,
+  xl: 4px
+);
+
+$text-color: #333333;
+$border-color: $secondary;
+
+// Theme Variables
+
+$lightDangerHover: #C43421;
+
+$darkPrimary: #175DDC;
+$darkPrimary-alt: #1252A3;
+$darkDanger: #FF4539;
+$darkDangerHover: #FF291A;
+$darkSuccess: #23C653;
+$darkPending: #42BFDD;
+$darkWarning: #FFEC3A;
+$darkInfo: #8D94A5;
+$darkLinks: #175DDC;
+$darkGrey1: #BAC0CE;
+$darkGrey2: #8D94A5;
+$darkBlue1: #4C525F;
+$darkBlue2: #3C424E;
+$darkDarkBlue1: #2F343D;
+$darkDarkBlue2: #1F242E;
+
+
+$themes: (
+    light: (
+        primary: $primary,
+        danger: $danger,
+        success: $success,
+        pending: $pending,
+        warning: $warning,
+        info: #343a40,
+        textColor: $text-color,
+        headingColor: #333333,
+        darkTextColor: #495057,
+        warningTextColor: $white,
+        successTextColor: $white,
+        dangerTextColor: $white,
+        textMuted: #6C757D,
+        backgroundColor: $body-bg,
+        badgeInfoBackground: #555555,
+        badgePrimaryBackground: $primary,
+        badgeSecondaryBackground: #ced4da,
+        bgPrimaryColor: $primary,
+        borderColor: $border-color,
+        borderPrimaryColor: $primary,
+        btnDanger: $danger,
+        btnDangerHover: $lightDangerHover,
+        btnDangerText: $white,
+        btnLinkTextColor: $primary,
+        btnLinkTextColorHover: #104097,
+        btnPrimary: $primary,
+        btnPrimaryBorderHover: #1249AE,
+        btnPrimaryHover: #134EB9,
+        btnPrimaryText: $white,
+        btnSecondary: $secondary,
+        btnSecondaryBorderHover: #B1BBC4,
+        btnSecondaryHover: #B8C1CA,
+        btnSecondaryText: #212529,
+        btnSecondaryTextHover: #212529,
+        calloutBackground: #fafafa,
+        cdkDraggingBackground: $white,
+        codeColor: #e83e8c,
+        dropdownBackground: $white,
+        dropdownDangerHover: #C43421,
+        dropdownHover: rgba(0,0,0,0.06),
+        dropdownTextMuted: #6C757D,
+        footerBackgroundColor: #FBFBFB,
+        foregroundColor: $white,
+        headerColor: rgba(0,0,0,0.03),
+        iconColor: #777777,
+        iconHover: $body-color,
+        imgFilter: invert(0) grayscale(0),
+        imgLoading: url('../images/loading.svg'),
+        inputBackgroundColor: #FBFBFB,
+        inputBorderColor: $border-color,
+        inputDisabledBackground: #e0e0e0,
+        inputDisabledColor: #6c757d,
+        inputPlaceholderColor: #B6B8B8,
+        inputSearchBackgroundColor: #FBFBFB,
+        inputSearchBorderColor: $border-color,
+        inputSearchPlaceholderColor: #B6B8B8,
+        inputSearchTextColor: #465057,
+        inputTextColor: #465057,
+        layoutFrontendColor: #ECF0F5,
+        learnMoreHover: #104097,
+        linkColor: $primary,
+        linkColorHover: #104097,
+        linkWeight: 400,
+        loginLogo: url("../images/logo-dark@2x.png"),
+        navActiveBackground: $white,
+        navActiveWeight: 600,
+        navBackground: $primary,
+        navOrgBackgroundColor: #FBFBFB,
+        navWeight: 600,
+        pwNumber: #007FDE,
+        pwSpecial: #c40800,
+        separator: $secondary,
+        separatorHr: rgb(0,0,0,0.1),
+        tableColorHover: #333333,
+        tableRowHover: rgba(0,0,0,0.03)
+    ),
+    dark: (
+        primary: $darkPrimary,
+        danger: $darkDanger,
+        success: $darkSuccess,
+        pending: $darkPending,
+        warning: $darkWarning,
+        info: $darkInfo,
+        textColor: $darkGrey1,
+        headingColor: $white,
+        darkTextColor: $darkDarkBlue2,
+        warningTextColor: $darkDarkBlue1,
+        successTextColor: $darkDarkBlue1,
+        dangerTextColor: $white,
+        textMuted: $darkGrey1,
+        backgroundColor: $darkDarkBlue1,
+        badgeInfoBackground: $darkDarkBlue2,
+        badgePrimaryBackground: $darkLinks,
+        badgeSecondaryBackground: $darkDarkBlue2,
+        bgPrimaryColor: $darkPrimary,
+        borderColor: $darkBlue1,
+        borderPrimaryColor: $darkPrimary,
+        btnDanger: $darkDanger,
+        btnDangerHover: $darkDangerHover,
+        btnDangerText: $white,
+        btnLinkText: $darkGrey1,
+        btnLinkTextHover: $white,
+        btnPrimary: $darkLinks,
+        btnPrimaryBorderHover: $darkPrimary-alt,
+        btnPrimaryHover: $darkPrimary-alt,
+        btnPrimaryText: $white,
+        btnSecondary: $darkBlue1,
+        btnSecondaryBorderHover: $darkBlue2,
+        btnSecondaryHover: $darkBlue2,
+        btnSecondaryText: $white,
+        btnSecondaryTextHover: $white,
+        calloutBackground: $darkDarkBlue2,
+        cdkDraggingBackground: $darkDarkBlue1,
+        codeColor: #e83e8c,
+        dropdownBackground: $darkGrey1,
+        dropdownDangerHover: $darkDangerHover,
+        dropdownHover: rgba(0,0,0,0.03),
+        dropdownTextMuted: $darkBlue1,
+        footerBackgroundColor: $darkDarkBlue2,
+        foregroundColor: $darkDarkBlue2,
+        headerColor: rgba(0,0,0,0.1),
+        iconColor: #777777,
+        iconHover: $darkGrey2,
+        imgFilter: invert(1) grayscale(1),
+        imgLoading: url('../images/loading-white.svg'),
+        inputBackgroundColor: $darkBlue1,
+        inputBorderColor: $darkBlue1,
+        inputDisabledBackground: $darkDarkBlue2,
+        inputDisabledColor: $darkGrey1,
+        inputPlaceholderColor: $darkGrey1,
+        inputSearchBackgroundColor: $darkGrey1,
+        inputSearchBorderColor: $darkGrey1,
+        inputSearchPlaceholderColor: $darkBlue1,
+        inputSearchTextColor: $darkDarkBlue1,
+        inputTextColor: $white,
+        layoutFrontendColor: $darkDarkBlue1,
+        learnMoreHover: $darkGrey1,
+        linkColor: $white,
+        linkColorHover: $white,
+        linkWeight: 600,
+        loginLogo: url("../images/logo-white@2x.png"),
+        navActiveBackground: $darkDarkBlue1,
+        navActiveWeight: 600,
+        navBackground: $darkDarkBlue1,
+        navOrgBackgroundColor: $darkDarkBlue2,
+        navWeight: 400,
+        pwNumber: $darkLinks,
+        pwSpecial: #FF7C70,
+        separator: $darkBlue1,
+        separatorHr: $darkBlue1,
+        tableColorHover: $darkGrey1,
+        tableRowHover: $darkDarkBlue1
+    ),
+);
+
+@mixin themify($themes: $themes) {
+    @each $theme, $map in $themes {
+        html.theme_#{$theme} & {
+            $theme-map: () !global;
+            @each $key, $submap in $map {
+                $value: map-get(map-get($themes, $theme), '#{$key}');
+                $theme-map: map-merge($theme-map, ($key: $value)) !global;
+            }
+            @content;
+            $theme-map: null !global;
+        }
+    }
+};
+
+@function themed($key) {
+    @return map-get($theme-map, $key);
+};

@@ -2,7 +2,7 @@
     <h1>
         {{'billing' | i18n}}
     </h1>
-    <button (click)="load()" class="btn btn-sm btn-outline-primary ml-auto" *ngIf="firstLoaded" [disabled]="loading">
+    <button (click)="load()" class="btn btn-sm btn-primary ml-auto" *ngIf="firstLoaded" [disabled]="loading">
         <i class="fa fa-refresh fa-fw" [ngClass]="{'fa-spin': loading}" aria-hidden="true"></i>
         {{'refresh' | i18n}}
     </button>
@@ -15,7 +15,7 @@
     <h2>{{(isCreditBalance ? 'accountCredit' : 'accountBalance') | i18n}}</h2>
     <p class="text-lg"><strong>{{creditOrBalance | currency:'$'}}</strong></p>
     <p>{{'creditAppliedDesc' | i18n}}</p>
-    <button type="button" class="btn btn-outline-secondary" (click)="addCredit()" *ngIf="!showAddCredit">
+    <button type="button" class="btn btn-secondary" (click)="addCredit()" *ngIf="!showAddCredit">
         {{'addCredit' | i18n}}
     </button>
     <app-add-credit [organizationId]="organizationId" (onAdded)="closeAddCredit(true)"
@@ -45,7 +45,7 @@
                     <input type="number" class="form-control" id="verifyAmount2" placeholder="xx" name="Amount2"
                         [(ngModel)]="verifyAmount2" min="1" max="99" step="1" required>
                 </div>
-                <button type="submit" class="btn btn-outline-primary btn-submit" [disabled]="verifyForm.loading">
+                <button type="submit" class="btn btn-primary btn-submit" [disabled]="verifyForm.loading">
                     <i class="fa fa-spinner fa-spin" title="{{'loading' | i18n}}" aria-hidden="true"></i>
                     <span>{{'verifyBankAccount' | i18n}}</span>
                 </button>
@@ -62,7 +62,7 @@
             {{paymentSource.description}}
         </p>
     </ng-container>
-    <button type="button" class="btn btn-outline-secondary" (click)="changePayment()" *ngIf="!showAdjustPayment">
+    <button type="button" class="btn btn-secondary" (click)="changePayment()" *ngIf="!showAdjustPayment">
         {{(paymentSource ? 'changePaymentMethod' : 'addPaymentMethod') | i18n}}
     </button>
     <app-adjust-payment [currentType]="paymentSource != null ? paymentSource.type : null"

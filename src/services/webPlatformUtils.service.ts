@@ -11,6 +11,7 @@ export class WebPlatformUtilsService implements PlatformUtilsService {
     identityClientId: string = 'web';
 
     private browserCache: DeviceType = null;
+    private prefersColorSchemeDark = window.matchMedia('(prefers-color-scheme: dark)');
 
     constructor(private i18nService: I18nService, private messagingService: MessagingService,
         private logService: LogService) { }
@@ -313,11 +314,13 @@ export class WebPlatformUtilsService implements PlatformUtilsService {
         return false;
     }
 
-    getDefaultSystemTheme() {
-        return Promise.resolve(null as 'light' | 'dark');
+    getDefaultSystemTheme(): Promise<'light' | 'dark'> {
+        return Promise.resolve(this.prefersColorSchemeDark.matches ? 'dark' : 'light');
     }
 
-    onDefaultSystemThemeChange() {
-        /* noop */
+    onDefaultSystemThemeChange(callback: ((theme: 'light' | 'dark') => unknown)) {
+        this.prefersColorSchemeDark.addEventListener('change', ({ matches }) => {
+            callback(matches ? 'dark' : 'light');
+        });
     }
 }

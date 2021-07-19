@@ -14,7 +14,7 @@
                     {{'filters' | i18n}}
                 </div>
                 <div class="card-body">
-                    <input type="search" placeholder="{{searchPlaceholder || ('searchSends' | i18n)}}" id="search"
+                    <input type="search" placeholder="&#xf002;  {{searchPlaceholder || ('searchSends' | i18n)}}" id="search"
                         class="form-control" [(ngModel)]="searchText" (input)="searchTextChanged()" autocomplete="off"
                         appAutofocus>
                     <ul class="fa-ul card-ul">
@@ -53,7 +53,7 @@
                     </small>
                 </h1>
                 <div class="ml-auto d-flex">
-                    <button type="button" class="btn btn-outline-primary btn-sm" (click)="addSend()"
+                    <button type="button" class="btn btn-primary btn-sm" (click)="addSend()"
                         [disabled]="disableSend">
                         <i class="fa fa-plus fa-fw" aria-hidden="true"></i>{{'createSend' | i18n}}
                     </button>
@@ -100,7 +100,7 @@
                         </td>
                         <td class="table-list-options">
                             <div class="dropdown" appListDropdown>
-                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                <button class="btn btn-secondary dropdown-toggle" type="button"
                                     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false" appA11yTitle="{{'options' | i18n}}">
                                     <i class="fa fa-cog fa-lg" aria-hidden="true"></i>
@@ -132,7 +132,7 @@
                 </ng-container>
                 <ng-container *ngIf="loaded">
                     <p>{{'noSendsInList' | i18n}}</p>
-                    <button (click)="addSend()" class="btn btn-outline-primary" [disabled]="disableSend">
+                    <button (click)="addSend()" class="btn btn-primary" [disabled]="disableSend">
                         <i class="fa fa-plus fa-fw"></i>{{'createSend' | i18n}}</button>
                 </ng-container>
             </div>

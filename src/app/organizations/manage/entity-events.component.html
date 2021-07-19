@@ -26,7 +26,7 @@
                             placeholder="{{'endDate' | i18n}}" [(ngModel)]="end" placeholder="YYYY-MM-DDTHH:MM">
                     </div>
                     <button #refreshBtn [appApiAction]="refreshPromise" type="button"
-                        class="btn btn-sm btn-outline-primary ml-3" (click)="loadEvents(true)"
+                        class="btn btn-sm btn-primary ml-3" (click)="loadEvents(true)"
                         [disabled]="loaded && refreshBtn.loading">
                         <i class="fa fa-refresh fa-fw" [ngClass]="{'fa-spin': loaded && refreshBtn.loading}"
                             aria-hidden="true"></i>
@@ -70,7 +70,7 @@
                 </button>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">{{'close' | i18n}}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'close' | i18n}}</button>
             </div>
         </div>
     </div>

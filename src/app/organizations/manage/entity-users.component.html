@@ -20,14 +20,14 @@
                     <div class="mr-3">
                         <label class="sr-only" for="search">{{'search' | i18n}}</label>
                         <input type="search" class="form-control form-control-sm" id="search"
-                            placeholder="{{'search' | i18n}}" name="SearchText" [(ngModel)]="searchText">
+                            placeholder="&#xf002;  {{'search' | i18n}}" name="SearchText" [(ngModel)]="searchText">
                     </div>
                     <div class="btn-group btn-group-sm" role="group">
-                        <button type="button" class="btn btn-outline-secondary" [ngClass]="{active: !showSelected}"
+                        <button type="button" class="btn btn-secondary" [ngClass]="{active: !showSelected}"
                             (click)="filterSelected(false)">
                             {{'all' | i18n}}
                         </button>
-                        <button type="button" class="btn btn-outline-secondary" [ngClass]="{active: showSelected}"
+                        <button type="button" class="btn btn-secondary" [ngClass]="{active: showSelected}"
                             (click)="filterSelected(true)">
                             {{'selected' | i18n}}
                             <span class="badge badge-pill badge-info" *ngIf="selectedCount">{{selectedCount}}</span>
@@ -107,7 +107,7 @@
                     <i class="fa fa-spinner fa-spin" title="{{'loading' | i18n}}" aria-hidden="true"></i>
                     <span>{{'save' | i18n}}</span>
                 </button>
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">{{'close' | i18n}}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'close' | i18n}}</button>
             </div>
         </form>
     </div>

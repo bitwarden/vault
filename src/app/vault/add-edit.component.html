@@ -45,7 +45,7 @@
                                     [(ngModel)]="cipher.login.username" appInputVerbatim
                                     [disabled]="cipher.isDeleted || viewOnly">
                                 <div class="input-group-append" *ngIf="!cipher.isDeleted">
-                                    <button type="button" class="btn btn-outline-secondary"
+                                    <button type="button" class="btn btn-secondary"
                                         appA11yTitle="{{'copyUsername' | i18n}}"
                                         (click)="copy(cipher.login.username, 'username', 'Username')">
                                         <i class="fa fa-lg fa-clone" aria-hidden="true"></i>
@@ -78,13 +78,13 @@
                                     [(ngModel)]="cipher.login.password" appInputVerbatim autocomplete="new-password"
                                     [disabled]="cipher.isDeleted || !cipher.viewPassword || viewOnly">
                                 <div class="input-group-append">
-                                    <button type="button" class="btn btn-outline-secondary"
+                                    <button type="button" class="btn btn-secondary"
                                         appA11yTitle="{{'toggleVisibility' | i18n}}" (click)="togglePassword()"
                                         [disabled]="!cipher.viewPassword">
                                         <i class="fa fa-lg" aria-hidden="true"
                                             [ngClass]="{'fa-eye': !showPassword, 'fa-eye-slash': showPassword}"></i>
                                     </button>
-                                    <button type="button" class="btn btn-outline-secondary"
+                                    <button type="button" class="btn btn-secondary"
                                         appA11yTitle="{{'copyPassword' | i18n}}"
                                         (click)="copy(cipher.login.password, 'password', 'Password')"
                                         [disabled]="!cipher.viewPassword">
@@ -103,7 +103,7 @@
                         </div>
                         <div class="col-6 form-group totp d-flex align-items-end" [ngClass]="{'low': totpLow}">
                             <div *ngIf="!cipher.login.totp || !totpCode">
-                                <img src="../../images/totp-countdown.png" title="{{'verificationCodeTotp' | i18n}}"
+                                <img src="../../images/totp-countdown.png" id="totpImage" title="{{'verificationCodeTotp' | i18n}}"
                                     class="ml-2">
                                 <a href="#" appStopClick class="badge badge-primary ml-3" (click)="premiumRequired()"
                                     *ngIf="!organization && !cipher.organizationId && !canAccessPremium">
@@ -146,12 +146,12 @@
                                         [disabled]="cipher.isDeleted || viewOnly"
                                         placeholder="{{'ex' | i18n}} https://google.com" appInputVerbatim>
                                     <div class="input-group-append">
-                                        <button type="button" class="btn btn-outline-secondary"
+                                        <button type="button" class="btn btn-secondary"
                                             appA11yTitle="{{'launch' | i18n}}" (click)="launch(u)"
                                             [disabled]="!u.canLaunch">
                                             <i class="fa fa-lg fa-share" aria-hidden="true"></i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-secondary"
+                                        <button type="button" class="btn btn-secondary"
                                             appA11yTitle="{{'copyUri' | i18n}}" (click)="copy(u.uri, 'uri', 'URI')">
                                             <i class="fa fa-lg fa-clone" aria-hidden="true"></i>
                                         </button>
@@ -214,12 +214,12 @@
                                     [(ngModel)]="cipher.card.number" appInputVerbatim autocomplete="new-password"
                                     [disabled]="cipher.isDeleted || viewOnly">
                                 <div class="input-group-append">
-                                    <button type="button" class="btn btn-outline-secondary"
+                                    <button type="button" class="btn btn-secondary"
                                         appA11yTitle="{{'toggleVisibility' | i18n}}" (click)="toggleCardNumber()">
                                         <i class="fa fa-lg" aria-hidden="true"
                                             [ngClass]="{'fa-eye': !showCardNumber, 'fa-eye-slash': showCardNumber}"></i>
                                     </button>
-                                    <button type="button" class="btn btn-outline-secondary"
+                                    <button type="button" class="btn btn-secondary"
                                         appA11yTitle="{{'copyNumber' | i18n}}"
                                         (click)="copy(cipher.card.number, 'number', 'Number')">
                                         <i class="fa fa-lg fa-clone" aria-hidden="true"></i>
@@ -250,12 +250,12 @@
                                     [(ngModel)]="cipher.card.code" appInputVerbatim autocomplete="new-password"
                                     [disabled]="cipher.isDeleted || viewOnly">
                                 <div class="input-group-append">
-                                    <button type="button" class="btn btn-outline-secondary"
+                                    <button type="button" class="btn btn-secondary"
                                         appA11yTitle="{{'toggleVisibility' | i18n}}" (click)="toggleCardCode()">
                                         <i class="fa fa-lg" aria-hidden="true"
                                             [ngClass]="{'fa-eye': !showCardCode, 'fa-eye-slash': showCardCode}"></i>
                                     </button>
-                                    <button type="button" class="btn btn-outline-secondary"
+                                    <button type="button" class="btn btn-secondary"
                                         appA11yTitle="{{'securityCode' | i18n}}"
                                         (click)="copy(cipher.card.code, 'securityCode', 'Security Code')">
                                         <i class="fa fa-lg fa-clone" aria-hidden="true"></i>
@@ -410,7 +410,7 @@
                                         [(ngModel)]="f.value" appInputVerbatim
                                         [disabled]="cipher.isDeleted || viewOnly">
                                     <div class="input-group-append">
-                                        <button type="button" class="btn btn-outline-secondary"
+                                        <button type="button" class="btn btn-secondary"
                                             appA11yTitle="{{'copyValue' | i18n}}"
                                             (click)="copy(f.value, 'value', 'Field')">
                                             <i class="fa fa-lg fa-clone" aria-hidden="true"></i>
@@ -423,14 +423,14 @@
                                         class="form-control text-monospace" appInputVerbatim autocomplete="new-password"
                                         [disabled]="cipher.isDeleted || viewOnly || (!cipher.viewPassword && !f.newField)">
                                     <div class="input-group-append">
-                                        <button type="button" class="btn btn-outline-secondary"
+                                        <button type="button" class="btn btn-secondary"
                                             appA11yTitle="{{'toggleVisibility' | i18n}}" (click)="toggleFieldValue(f)"
                                             [disabled]="!cipher.viewPassword && !f.newField">
                                             <i class="fa fa-lg" aria-hidden="true"
                                                 [ngClass]="{'fa-eye': !f.showValue, 'fa-eye-slash': f.showValue}">
                                             </i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-secondary"
+                                        <button type="button" class="btn btn-secondary"
                                             appA11yTitle="{{'copyValue' | i18n}}"
                                             (click)="copy(f.value, 'value', f.type === fieldType.Hidden ? 'H_Field' : 'Field')"
                                             [disabled]="!cipher.viewPassword && !f.newField">
@@ -536,7 +536,7 @@
                     <i class="fa fa-spinner fa-spin" title="{{'loading' | i18n}}" aria-hidden="true"></i>
                     <span>{{(cipher?.isDeleted ? 'restore' : 'save') | i18n}}</span>
                 </button>
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     {{(viewOnly ? 'close' : 'cancel') | i18n}}
                 </button>
                 <div class="ml-auto" *ngIf="cipher && !viewOnly">
@@ -545,7 +545,7 @@
                         <i class="fa fa-lg" [ngClass]="{'fa-star': cipher.favorite, 'fa-star-o': !cipher.favorite}"
                             aria-hidden="true"></i>
                     </button>
-                    <button #deleteBtn type="button" (click)="delete()" class="btn btn-outline-danger"
+                    <button #deleteBtn type="button" (click)="delete()" class="btn btn-danger"
                         appA11yTitle="{{(cipher.isDeleted ? 'permanentlyDelete' : 'delete') | i18n}}"
                         *ngIf="editMode && !cloneMode" [disabled]="deleteBtn.loading" [appApiAction]="deletePromise">
                         <i class="fa fa-trash-o fa-lg fa-fw" [hidden]="deleteBtn.loading" aria-hidden="true"></i>

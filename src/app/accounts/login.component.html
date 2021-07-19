@@ -1,7 +1,7 @@
 <form #form (ngSubmit)="submit()" [appApiAction]="formPromise" class="container" ngNativeValidate>
     <div class="row justify-content-md-center mt-5">
         <div class="col-5">
-            <img src="../../images/logo-dark@2x.png" class="logo mb-2" alt="Bitwarden">
+            <div id="loginLogo" class="logo mb-2" alt="Bitwarden"></div>
             <p class="lead text-center mx-4 mb-4">{{'loginOrCreateNewAccount' | i18n}}</p>
             <div class="card d-block">
                 <div class="card-body">
@@ -44,12 +44,12 @@
                             <i class="fa fa-spinner fa-spin" title="{{'loading' | i18n}}" aria-hidden="true"></i>
                         </button>
                         <a routerLink="/register" [queryParams]="{email: email}"
-                            class="btn btn-outline-secondary btn-block ml-2 mt-0">
+                            class="btn btn-secondary btn-block ml-2 mt-0">
                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i> {{'createAccount' | i18n}}
                         </a>
                     </div>
                     <div class="d-flex">
-                        <a routerLink="/sso" class="btn btn-outline-secondary btn-block mt-2">
+                        <a routerLink="/sso" class="btn btn-secondary btn-block mt-2">
                             <i class="fa fa-bank" aria-hidden="true"></i> {{'enterpriseSingleSignOn' | i18n}}
                         </a>
                     </div>

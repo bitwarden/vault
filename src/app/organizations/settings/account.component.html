@@ -48,8 +48,8 @@
             {{'learnMore' | i18n}}
         </a>
     </p>
-    <button type="button" class="btn btn-outline-secondary" (click)="viewApiKey()">{{'viewApiKey' | i18n}}</button>
-    <button type="button" class="btn btn-outline-secondary" (click)="rotateApiKey()">{{'rotateApiKey' | i18n}}</button>
+    <button type="button" class="btn btn-secondary" (click)="viewApiKey()">{{'viewApiKey' | i18n}}</button>
+    <button type="button" class="btn btn-secondary" (click)="rotateApiKey()">{{'rotateApiKey' | i18n}}</button>
 </ng-container>
 <div class="secondary-header border-0 mb-0">
     <h1>{{'taxInformation' | i18n}}</h1>
@@ -72,9 +72,9 @@
 <div class="card border-danger">
     <div class="card-body">
         <p>{{'dangerZoneDesc' | i18n}}</p>
-        <button type="button" class="btn btn-outline-danger"
+        <button type="button" class="btn btn-danger"
             (click)="deleteOrganization()">{{'deleteOrganization' | i18n}}</button>
-        <button type="button" class="btn btn-outline-danger" (click)="purgeVault()">{{'purgeVault' | i18n}}</button>
+        <button type="button" class="btn btn-danger" (click)="purgeVault()">{{'purgeVault' | i18n}}</button>
     </div>
 </div>
 <ng-template #deleteOrganizationTemplate></ng-template>

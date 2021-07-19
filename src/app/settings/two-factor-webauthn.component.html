@@ -58,7 +58,7 @@
                                 [disabled]="!keyIdAvailable">
                         </div>
                     </div>
-                    <button type="button" (click)="readKey()" class="btn btn-outline-secondary mr-2"
+                    <button type="button" (click)="readKey()" class="btn btn-secondary mr-2"
                         [disabled]="readKeyBtn.loading || webAuthnListening || !keyIdAvailable" #readKeyBtn
                         [appApiAction]="challengePromise">
                         {{'readKey' | i18n}}
@@ -87,13 +87,13 @@
                             aria-hidden="true"></i>
                         <span *ngIf="!form.loading">{{'save' | i18n}}</span>
                     </button>
-                    <button #disableBtn type="button" class="btn btn-outline-secondary btn-submit"
+                    <button #disableBtn type="button" class="btn btn-secondary btn-submit"
                         [appApiAction]="disablePromise" [disabled]="disableBtn.loading" (click)="disable()"
                         *ngIf="enabled">
                         <i class="fa fa-spinner fa-spin" title="{{'loading' | i18n}}" aria-hidden="true"></i>
                         <span>{{'disableAllKeys' | i18n}}</span>
                     </button>
-                    <button type="button" class="btn btn-outline-secondary"
+                    <button type="button" class="btn btn-secondary"
                         data-dismiss="modal">{{'close' | i18n}}</button>
                 </div>
             </form>

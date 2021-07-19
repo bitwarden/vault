@@ -5,7 +5,7 @@
 <p *ngIf="organizationId">{{'twoStepLoginOrganizationDesc' | i18n}}</p>
 <app-callout type="warning" *ngIf="!organizationId">
     <p>{{'twoStepLoginRecoveryWarning' | i18n}}</p>
-    <button type="button" class="btn btn-outline-secondary"
+    <button type="button" class="btn btn-secondary"
         (click)="recoveryCode()">{{'viewRecoveryCode' | i18n}}</button>
 </app-callout>
 <h2 [ngClass]="{'mt-5':!organizationId}">
@@ -38,7 +38,7 @@
             {{p.description}}
         </div>
         <div class="ml-auto">
-            <button type="button" class="btn btn-outline-secondary btn-sm" [disabled]="!canAccessPremium && p.premium"
+            <button type="button" class="btn btn-secondary btn-sm" [disabled]="!canAccessPremium && p.premium"
                 (click)="manage(p.type)">
                 {{'manage' | i18n}}
             </button>
