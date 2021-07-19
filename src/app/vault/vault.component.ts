@@ -64,6 +64,7 @@ export class VaultComponent implements OnInit, OnDestroy {
     showBrowserOutdated = false;
     showUpdateKey = false;
     showPremiumCallout = false;
+    showProviders = false;
     deleted: boolean = false;
     trashCleanupWarning: string = null;
 
@@ -91,6 +92,8 @@ export class VaultComponent implements OnInit, OnDestroy {
             const canAccessPremium = await this.userService.canAccessPremium();
             this.showPremiumCallout = !this.showVerifyEmail && !canAccessPremium &&
                 !this.platformUtilsService.isSelfHost();
+
+            this.showProviders = (await this.userService.getAllProviders()).length > 0;
 
             await Promise.all([
                 this.groupingsComponent.load(),

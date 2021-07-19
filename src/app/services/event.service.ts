@@ -228,7 +228,23 @@ export class EventService {
 
                 humanReadableMsg = this.i18nService.t('modifiedPolicyId', p1);
                 break;
-
+            // Provider users:
+            case EventType.ProviderUser_Invited:
+                msg = this.i18nService.t('invitedUserId', this.formatProviderUserId(ev));
+                humanReadableMsg = this.i18nService.t('invitedUserId', this.getShortId(ev.providerUserId));
+                break;
+            case EventType.ProviderUser_Confirmed:
+                msg = this.i18nService.t('confirmedUserId', this.formatProviderUserId(ev));
+                humanReadableMsg = this.i18nService.t('confirmedUserId', this.getShortId(ev.providerUserId));
+                break;
+            case EventType.ProviderUser_Updated:
+                msg = this.i18nService.t('editedUserId', this.formatProviderUserId(ev));
+                humanReadableMsg = this.i18nService.t('editedUserId', this.getShortId(ev.providerUserId));
+                break;
+            case EventType.ProviderUser_Removed:
+                msg = this.i18nService.t('removedUserId', this.formatProviderUserId(ev));
+                humanReadableMsg = this.i18nService.t('removedUserId', this.getShortId(ev.providerUserId));
+                break;
             default:
                 break;
         }
@@ -315,6 +331,14 @@ export class EventService {
         const a = this.makeAnchor(shortId);
         a.setAttribute('href', '#/organizations/' + ev.organizationId + '/manage/people?search=' + shortId +
             '&viewEvents=' + ev.organizationUserId);
+        return a.outerHTML;
+    }
+
+    private formatProviderUserId(ev: EventResponse) {
+        const shortId = this.getShortId(ev.providerUserId);
+        const a = this.makeAnchor(shortId);
+        a.setAttribute('href', '#/providers/' + ev.providerId + '/manage/people?search=' + shortId +
+            '&viewEvents=' + ev.providerUserId);
         return a.outerHTML;
     }
 

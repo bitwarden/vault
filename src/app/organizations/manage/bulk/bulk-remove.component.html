@@ -10,17 +10,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="card-body text-center" *ngIf="loading">
-                    <i class="fa fa-spinner fa-spin" title="{{'loading' | i18n}}" aria-hidden="true"></i>
-                    {{'loading' | i18n}}
-                </div>
                 <app-callout type="danger" *ngIf="users.length <= 0">
                     {{'noSelectedUsersApplicable' | i18n}}
                 </app-callout>
                 <app-callout type="error" *ngIf="error">
                     {{error}}
                 </app-callout>
-                <ng-container *ngIf="!loading && !done">
+                <ng-container *ngIf="!done">
                     <app-callout type="warning" *ngIf="users.length > 0 && !error">
                         {{'removeUsersWarning' | i18n}}
                     </app-callout>
@@ -42,7 +38,7 @@
                         </tr>
                     </table>
                 </ng-container>
-                <ng-container *ngIf="!loading && done">
+                <ng-container *ngIf="done">
                     <table class="table table-hover table-list">
                         <thead>
                             <tr>

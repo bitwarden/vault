@@ -11,6 +11,7 @@
     <i class="fa fa-spinner fa-spin text-muted" title="{{'loading' | i18n}}"></i>
     <span class="sr-only">{{'loading' | i18n}}</span>
 </ng-container>
+
 <ng-container *ngIf="sub">
     <app-callout type="warning" title="{{'canceled' | i18n}}" *ngIf="subscription && subscription.cancelled">
         {{'subscriptionCanceled' | i18n}}</app-callout>
@@ -149,6 +150,13 @@
                     [organizationId]="organizationId" [interval]="billingInterval" (onAdjusted)="closeStorage(true)"
                     (onCanceled)="closeStorage(false)" *ngIf="showAdjustStorage"></app-adjust-storage>
             </div>
+        </ng-container>
+
+        <ng-container *ngIf="userOrg?.providerId != null">
+            <div class="secondary-header border-0 mb-0">
+                <h1>{{'provider' | i18n}}</h1>
+            </div>
+            {{'yourProviderIs' | i18n : userOrg.providerName}}
         </ng-container>
     </ng-container>
 </ng-container>

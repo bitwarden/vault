@@ -7,7 +7,7 @@ import { ApiService } from 'jslib-common/abstractions/api.service';
 import { I18nService } from 'jslib-common/abstractions/i18n.service';
 import { OrganizationUserBulkRequest } from 'jslib-common/models/request/organizationUserBulkRequest';
 
-import { OrganizationUserUserDetailsResponse } from 'jslib-common/models/response/organizationUserResponse';
+import { BulkUserDetails } from './bulk-status.component';
 
 @Component({
     selector: 'app-bulk-remove',
@@ -16,7 +16,7 @@ import { OrganizationUserUserDetailsResponse } from 'jslib-common/models/respons
 export class BulkRemoveComponent {
 
     @Input() organizationId: string;
-    @Input() users: OrganizationUserUserDetailsResponse[];
+    @Input() users: BulkUserDetails[];
 
     statuses: Map<string, string> = new Map();
 
@@ -24,13 +24,12 @@ export class BulkRemoveComponent {
     done: boolean = false;
     error: string;
 
-    constructor(private apiService: ApiService, private i18nService: I18nService) { }
+    constructor(protected apiService: ApiService, protected i18nService: I18nService) { }
 
     async submit() {
         this.loading = true;
         try {
-            const request = new OrganizationUserBulkRequest(this.users.map(user => user.id));
-            const response = await this.apiService.deleteManyOrganizationUsers(this.organizationId, request);
+            const response = await this.deleteUsers();
 
             response.data.forEach(entry => {
                 const error = entry.error !== '' ? entry.error : this.i18nService.t('bulkRemovedMessage');
@@ -42,5 +41,10 @@ export class BulkRemoveComponent {
         }
 
         this.loading = false;
+    }
+
+    protected async deleteUsers() {
+        const request = new OrganizationUserBulkRequest(this.users.map(user => user.id));
+        return await this.apiService.deleteManyOrganizationUsers(this.organizationId, request);
     }
 }

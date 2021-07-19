@@ -171,6 +171,8 @@ import { GroupingsComponent } from './vault/groupings.component';
 import { ShareComponent } from './vault/share.component';
 import { VaultComponent } from './vault/vault.component';
 
+import { ProvidersComponent } from './providers/providers.component';
+
 import { CalloutComponent } from 'jslib-angular/components/callout.component';
 import { IconComponent } from 'jslib-angular/components/icon.component';
 
@@ -433,6 +435,21 @@ registerLocaleData(localeZhTw, 'zh-TW');
         VerifyEmailTokenComponent,
         VerifyRecoverDeleteComponent,
         WeakPasswordsReportComponent,
+        ProvidersComponent,
+    ],
+    exports: [
+        A11yTitleDirective,
+        AvatarComponent,
+        CalloutComponent,
+        ApiActionDirective,
+        StopClickDirective,
+        StopPropDirective,
+        I18nPipe,
+        SearchPipe,
+        ModalComponent,
+        NavbarComponent,
+        FooterComponent,
+        OrganizationPlansComponent,
     ],
     providers: [DatePipe, SearchPipe, UserNamePipe],
     bootstrap: [],

@@ -1,0 +1,20 @@
+<ng-container>
+    <p *ngIf="!loaded" class="text-muted">
+        <i class="fa fa-spinner fa-spin" title="{{'loading' | i18n}}" aria-hidden="true"></i>
+        <span class="sr-only">{{'loading' | i18n}}</span>
+    </p>
+    <ng-container *ngIf="loaded">
+        <ul class="fa-ul card-ul carets" *ngIf="providers && providers.length">
+            <li *ngFor="let o of providers">
+                <a [routerLink]="['/providers', o.id]" class="text-body">
+                    <i class="fa-li fa fa-caret-right" aria-hidden="true"></i> {{o.name}}
+                    <ng-container *ngIf="!o.enabled">
+                        <i class="fa fa-exclamation-triangle text-danger" title="{{'organizationIsDisabled' | i18n}}"
+                            aria-hidden="true"></i>
+                        <span class="sr-only">{{'organizationIsDisabled' | i18n}}</span>
+                    </ng-container>
+                </a>
+            </li>
+        </ul>
+    </ng-container>
+</ng-container>

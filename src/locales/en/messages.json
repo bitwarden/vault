@@ -4017,5 +4017,123 @@
   },
   "resetPasswordManageUsers": {
     "message": "Manage Users must also be enabled with the Manage Password Reset permission"
+  },
+  "setupProvider": {
+    "message": "Setup Provider"
+  },
+  "setupProviderLoginDesc": {
+    "message": "You've been invited to setup a new provider. To continue, you need to log in or create a new Bitwarden account."
+  },
+  "setupProviderDesc": {
+    "message": "You have been invited to create a Provider, please enter the details below to complete the setup. Contact customer support if you have any questions."
+  },
+  "providerName": {
+    "message": "Provider Name"
+  },
+  "providerSetup": {
+    "message": "The provider has been setup."
+  },
+  "clients": {
+    "message": "Clients"
+  },
+  "providerAdmin": {
+    "message": "Provider Admin"
+  },
+  "providerAdminDesc": {
+    "message": "The highest access user that can manage all aspects of your provider, and client organizations."
+  },
+  "serviceUser": {
+    "message": "Service User"
+  },
+  "serviceUserDesc": {
+    "message": "Service users can access and manage all client organizations."
+  },
+  "providerInviteUserDesc": {
+    "message": "Invite a new user to your provider by entering their Bitwarden account email address below. If they do not have a Bitwarden account already, they will be prompted to create a new account."
+  },
+  "joinProvider": {
+    "message": "Join Provider"
+  },
+  "joinProviderDesc": {
+    "message": "You've been invited to join the provider listed above. To accept the invitation, you need to log in or create a new Bitwarden account."
+  },
+  "providerInviteAcceptFailed": {
+    "message": "Unable to accept invitation. Ask a provider admin to send a new invitation."
+  },
+  "providerInviteAcceptedDesc": {
+    "message": "You can access this provider once an administrator confirms your membership. We'll send you an email when that happens."
+  },
+  "providerUsersNeedConfirmed": {
+    "message": "You have users that have accepted their invitation, but still need to be confirmed. Users will not have access to the provider until they are confirmed."
+  },
+  "provider": {
+    "message": "Provider"
+  },
+  "newClientOrganization": {
+    "message": "New client organization"
+  },
+  "newClientOrganizationDesc": {
+    "message": "Organizations allow you to share parts of your vault with others as well as manage related users for a specific entity such as a family, small team, or large company."
+  },
+  "addExistingOrganization": {
+    "message": "Add existing organization"
+  },
+  "myProvider": {
+    "message": "My Provider"
+  },
+  "addOrganizationConfirmation": {
+    "message": "Are you sure you want to add $ORGANIZATION$ as a client to $PROVIDER$?",
+    "placeholders": {
+      "organization": {
+        "content": "$1",
+        "example": "My Org Name"
+      },
+      "provider": {
+        "content": "$2",
+        "example": "My Provider Name"
+      }
+    }
+  },
+  "organizationJoinedProvider": {
+    "message": "Organization was successfully added to the provider"
+  },
+  "accessingUsingProvider": {
+    "message": "Accessing organization using provider $PROVIDER$",
+    "placeholders": {
+      "provider": {
+        "content": "$1",
+        "example": "My Provider Name"
+      }
+    }
+  },
+  "providerIsDisabled": {
+    "message": "Provider is disabled."
+  },
+  "providerUpdated": {
+    "message": "Provider updated"
+  },
+  "yourProviderIs": {
+    "message": "Your provider is $PROVIDER$. They have administrative and billing privileges for your organization.",
+    "placeholders": {
+      "provider": {
+        "content": "$1",
+        "example": "My Provider Name"
+      }
+    }
+  },
+  "detachedOrganization": {
+    "message": "The organization $ORGANIZATION$ has been detached from your provider.",
+    "placeholders": {
+      "organization": {
+        "content": "$1",
+        "example": "My Org Name"
+      }
+    }
+  },
+  "detachOrganizationConfirmation": {
+    "message": "Are you sure you want to detach this organization? The organization will continue to exist but will no longer be managed by the provider."
+  },
+  "add": {
+    "message": "Add"
   }
 }

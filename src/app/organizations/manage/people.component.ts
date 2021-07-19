@@ -14,11 +14,11 @@ import {
 import { ToasterService } from 'angular2-toaster';
 
 import { ValidationService } from 'jslib-angular/services/validation.service';
-import { ConstantsService } from 'jslib-common/services/constants.service';
 
 import { ApiService } from 'jslib-common/abstractions/api.service';
 import { CryptoService } from 'jslib-common/abstractions/crypto.service';
 import { I18nService } from 'jslib-common/abstractions/i18n.service';
+import { LogService } from 'jslib-common/abstractions/log.service';
 import { PlatformUtilsService } from 'jslib-common/abstractions/platformUtils.service';
 import { PolicyService } from 'jslib-common/abstractions/policy.service';
 import { SearchService } from 'jslib-common/abstractions/search.service';
@@ -37,12 +37,12 @@ import { OrganizationUserUserDetailsResponse } from 'jslib-common/models/respons
 import { OrganizationUserStatusType } from 'jslib-common/enums/organizationUserStatusType';
 import { OrganizationUserType } from 'jslib-common/enums/organizationUserType';
 import { PolicyType } from 'jslib-common/enums/policyType';
+import { ProviderUserType } from 'jslib-common/enums/providerUserType';
 
 import { SearchPipe } from 'jslib-angular/pipes/search.pipe';
 import { UserNamePipe } from 'jslib-angular/pipes/user-name.pipe';
 
-import { Utils } from 'jslib-common/misc/utils';
-
+import { BasePeopleComponent } from '../../common/base.people.component';
 import { ModalComponent } from '../../modal.component';
 import { BulkConfirmComponent } from './bulk/bulk-confirm.component';
 import { BulkRemoveComponent } from './bulk/bulk-remove.component';
@@ -50,16 +50,13 @@ import { BulkStatusComponent } from './bulk/bulk-status.component';
 import { EntityEventsComponent } from './entity-events.component';
 import { ResetPasswordComponent } from './reset-password.component';
 import { UserAddEditComponent } from './user-add-edit.component';
-import { UserConfirmComponent } from './user-confirm.component';
 import { UserGroupsComponent } from './user-groups.component';
-
-const MaxCheckedCount = 500;
 
 @Component({
     selector: 'app-org-people',
     templateUrl: 'people.component.html',
 })
-export class PeopleComponent implements OnInit {
+export class PeopleComponent extends BasePeopleComponent<OrganizationUserUserDetailsResponse> implements OnInit {
     @ViewChild('addEdit', { read: ViewContainerRef, static: true }) addEditModalRef: ViewContainerRef;
     @ViewChild('groupsTemplate', { read: ViewContainerRef, static: true }) groupsModalRef: ViewContainerRef;
     @ViewChild('eventsTemplate', { read: ViewContainerRef, static: true }) eventsModalRef: ViewContainerRef;
@@ -69,16 +66,11 @@ export class PeopleComponent implements OnInit {
     @ViewChild('bulkConfirmTemplate', { read: ViewContainerRef, static: true }) bulkConfirmModalRef: ViewContainerRef;
     @ViewChild('bulkRemoveTemplate', { read: ViewContainerRef, static: true }) bulkRemoveModalRef: ViewContainerRef;
 
-    loading = true;
+    userType = ProviderUserType;
+    userStatusType = OrganizationUserStatusType;
+
     organizationId: string;
-    users: OrganizationUserUserDetailsResponse[];
-    pagedUsers: OrganizationUserUserDetailsResponse[];
-    searchText: string;
     status: OrganizationUserStatusType = null;
-    statusMap = new Map<OrganizationUserStatusType, OrganizationUserUserDetailsResponse[]>();
-    organizationUserType = OrganizationUserType;
-    organizationUserStatusType = OrganizationUserStatusType;
-    actionPromise: Promise<any>;
     accessEvents = false;
     accessGroups = false;
     canResetPassword = false; // User permission (admin/custom)
@@ -87,20 +79,16 @@ export class PeopleComponent implements OnInit {
     orgResetPasswordPolicyEnabled = false;
     callingUserType: OrganizationUserType = null;
 
-    protected didScroll = false;
-    protected pageSize = 100;
-
-    private pagedUsersCount = 0;
-    private modal: ModalComponent = null;
-    private allUsers: OrganizationUserUserDetailsResponse[];
-
-    constructor(private apiService: ApiService, private route: ActivatedRoute,
-        private i18nService: I18nService, private componentFactoryResolver: ComponentFactoryResolver,
-        private platformUtilsService: PlatformUtilsService, private toasterService: ToasterService,
-        private cryptoService: CryptoService, private userService: UserService, private router: Router,
-        private storageService: StorageService, private searchService: SearchService,
-        private validationService: ValidationService, private policyService: PolicyService,
-        private searchPipe: SearchPipe, private userNamePipe: UserNamePipe, private syncService: SyncService) { }
+    constructor(apiService: ApiService, private route: ActivatedRoute,
+        i18nService: I18nService, componentFactoryResolver: ComponentFactoryResolver,
+        platformUtilsService: PlatformUtilsService, toasterService: ToasterService,
+        cryptoService: CryptoService, private userService: UserService, private router: Router,
+        storageService: StorageService, searchService: SearchService,
+        validationService: ValidationService, private policyService: PolicyService,
+        logService: LogService, searchPipe: SearchPipe, userNamePipe: UserNamePipe, private syncService: SyncService) {
+            super(apiService, searchService, i18nService, platformUtilsService, toasterService, cryptoService,
+                storageService, validationService, componentFactoryResolver, logService, searchPipe, userNamePipe);
+        }
 
     async ngOnInit() {
         this.route.parent.parent.params.subscribe(async params => {
@@ -149,21 +137,29 @@ export class PeopleComponent implements OnInit {
     }
 
     async load() {
-        const response = await this.apiService.getOrganizationUsers(this.organizationId);
-        this.statusMap.clear();
-        this.allUsers = response.data != null && response.data.length > 0 ? response.data : [];
-        this.allUsers.sort(Utils.getSortFunction(this.i18nService, 'email'));
-        this.allUsers.forEach(u => {
-            if (!this.statusMap.has(u.status)) {
-                this.statusMap.set(u.status, [u]);
-            } else {
-                this.statusMap.get(u.status).push(u);
-            }
-        });
-        this.filter(this.status);
         const policies = await this.policyService.getAll(PolicyType.ResetPassword);
         this.orgResetPasswordPolicyEnabled = policies.some(p => p.organizationId === this.organizationId && p.enabled);
-        this.loading = false;
+        super.load();
+    }
+
+    getUsers(): Promise<ListResponse<OrganizationUserUserDetailsResponse>> {
+        return this.apiService.getOrganizationUsers(this.organizationId);
+    }
+
+    deleteUser(id: string): Promise<any> {
+        return this.apiService.deleteOrganizationUser(this.organizationId, id);
+    }
+
+    reinviteUser(id: string): Promise<any> {
+        return this.apiService.postOrganizationUserReinvite(this.organizationId, id);
+    }
+
+    async confirmUser(user: OrganizationUserUserDetailsResponse, publicKey: Uint8Array): Promise<any> {
+        const orgKey = await this.cryptoService.getOrgKey(this.organizationId);
+        const key = await this.cryptoService.rsaEncrypt(orgKey.key, publicKey.buffer);
+        const request = new OrganizationUserConfirmRequest();
+        request.key = key.encryptedString;
+        await this.apiService.postOrganizationUserConfirm(this.organizationId, user.id, request);
     }
 
     allowResetPassword(orgUser: OrganizationUserUserDetailsResponse): boolean {
@@ -193,62 +189,6 @@ export class PeopleComponent implements OnInit {
         return this.orgUseResetPassword && orgUser.resetPasswordEnrolled && this.orgResetPasswordPolicyEnabled;
     }
 
-    filter(status: OrganizationUserStatusType) {
-        this.status = status;
-        if (this.status != null) {
-            this.users = this.statusMap.get(this.status);
-        } else {
-            this.users = this.allUsers;
-        }
-        // Reset checkbox selecton
-        this.selectAll(false);
-        this.resetPaging();
-    }
-
-    loadMore() {
-        if (!this.users || this.users.length <= this.pageSize) {
-            return;
-        }
-        const pagedLength = this.pagedUsers.length;
-        let pagedSize = this.pageSize;
-        if (pagedLength === 0 && this.pagedUsersCount > this.pageSize) {
-            pagedSize = this.pagedUsersCount;
-        }
-        if (this.users.length > pagedLength) {
-            this.pagedUsers = this.pagedUsers.concat(this.users.slice(pagedLength, pagedLength + pagedSize));
-        }
-        this.pagedUsersCount = this.pagedUsers.length;
-        this.didScroll = this.pagedUsers.length > this.pageSize;
-    }
-
-    get allCount() {
-        return this.allUsers != null ? this.allUsers.length : 0;
-    }
-
-    get invitedCount() {
-        return this.statusMap.has(OrganizationUserStatusType.Invited) ?
-            this.statusMap.get(OrganizationUserStatusType.Invited).length : 0;
-    }
-
-    get acceptedCount() {
-        return this.statusMap.has(OrganizationUserStatusType.Accepted) ?
-            this.statusMap.get(OrganizationUserStatusType.Accepted).length : 0;
-    }
-
-    get confirmedCount() {
-        return this.statusMap.has(OrganizationUserStatusType.Confirmed) ?
-            this.statusMap.get(OrganizationUserStatusType.Confirmed).length : 0;
-    }
-
-    get showConfirmUsers(): boolean {
-        return this.allUsers != null && this.statusMap != null && this.allUsers.length > 1 &&
-            this.confirmedCount > 0 && this.confirmedCount < 3 && this.acceptedCount > 0;
-    }
-
-    get showBulkConfirmUsers(): boolean {
-        return this.acceptedCount > 0;
-    }
-
     edit(user: OrganizationUserUserDetailsResponse) {
         if (this.modal != null) {
             this.modal.close();
@@ -276,10 +216,6 @@ export class PeopleComponent implements OnInit {
         });
     }
 
-    invite() {
-        this.edit(null);
-    }
-
     groups(user: OrganizationUserUserDetailsResponse) {
         if (this.modal != null) {
             this.modal.close();
@@ -300,40 +236,6 @@ export class PeopleComponent implements OnInit {
         this.modal.onClosed.subscribe(() => {
             this.modal = null;
         });
-    }
-
-    async remove(user: OrganizationUserUserDetailsResponse) {
-        const confirmed = await this.platformUtilsService.showDialog(
-            this.i18nService.t('removeUserConfirmation'), this.userNamePipe.transform(user),
-            this.i18nService.t('yes'), this.i18nService.t('no'), 'warning');
-        if (!confirmed) {
-            return false;
-        }
-
-        this.actionPromise = this.apiService.deleteOrganizationUser(this.organizationId, user.id);
-        try {
-            await this.actionPromise;
-            this.toasterService.popAsync('success', null, this.i18nService.t('removedUserId', this.userNamePipe.transform(user)));
-            this.removeUser(user);
-        } catch (e) {
-            this.validationService.showError(e);
-        }
-        this.actionPromise = null;
-    }
-
-    async reinvite(user: OrganizationUserUserDetailsResponse) {
-        if (this.actionPromise != null) {
-            return;
-        }
-
-        this.actionPromise = this.apiService.postOrganizationUserReinvite(this.organizationId, user.id);
-        try {
-            await this.actionPromise;
-            this.toasterService.popAsync('success', null, this.i18nService.t('hasBeenReinvited', this.userNamePipe.transform(user)));
-        } catch (e) {
-            this.validationService.showError(e);
-        }
-        this.actionPromise = null;
     }
 
     async bulkRemove() {
@@ -405,80 +307,6 @@ export class PeopleComponent implements OnInit {
         });
     }
 
-    async confirm(user: OrganizationUserUserDetailsResponse) {
-        function updateUser(self: PeopleComponent) {
-            user.status = OrganizationUserStatusType.Confirmed;
-            const mapIndex = self.statusMap.get(OrganizationUserStatusType.Accepted).indexOf(user);
-            if (mapIndex > -1) {
-                self.statusMap.get(OrganizationUserStatusType.Accepted).splice(mapIndex, 1);
-                self.statusMap.get(OrganizationUserStatusType.Confirmed).push(user);
-            }
-        }
-
-        const confirmUser = async (publicKey: Uint8Array) => {
-            try {
-                this.actionPromise = this.doConfirmation(user, publicKey);
-                await this.actionPromise;
-                updateUser(this);
-                this.toasterService.popAsync('success', null, this.i18nService.t('hasBeenConfirmed', this.userNamePipe.transform(user)));
-            } catch (e) {
-                this.validationService.showError(e);
-                throw e;
-            } finally {
-                this.actionPromise = null;
-            }
-        };
-
-        if (this.actionPromise != null) {
-            return;
-        }
-
-        const autoConfirm = await this.storageService.get<boolean>(ConstantsService.autoConfirmFingerprints);
-        if (autoConfirm == null || !autoConfirm) {
-            if (this.modal != null) {
-                this.modal.close();
-            }
-
-            const factory = this.componentFactoryResolver.resolveComponentFactory(ModalComponent);
-            this.modal = this.confirmModalRef.createComponent(factory).instance;
-            const childComponent = this.modal.show<UserConfirmComponent>(
-                UserConfirmComponent, this.confirmModalRef);
-
-            childComponent.name = this.userNamePipe.transform(user);
-            childComponent.organizationId = this.organizationId;
-            childComponent.organizationUserId = user != null ? user.id : null;
-            childComponent.userId = user != null ? user.userId : null;
-            childComponent.onConfirmedUser.subscribe(async (publicKey: Uint8Array) => {
-                try {
-                    await confirmUser(publicKey);
-                    this.modal.close();
-                } catch (e) {
-                    // tslint:disable-next-line
-                    console.error('Handled exception:', e);
-                }
-            });
-
-            this.modal.onClosed.subscribe(() => {
-                this.modal = null;
-            });
-            return;
-        }
-
-        try {
-            const publicKeyResponse = await this.apiService.getUserPublicKey(user.userId);
-            const publicKey = Utils.fromB64ToArray(publicKeyResponse.publicKey);
-            try {
-                // tslint:disable-next-line
-                console.log('User\'s fingerprint: ' +
-                    (await this.cryptoService.getFingerprint(user.userId, publicKey.buffer)).join('-'));
-            } catch { }
-            await confirmUser(publicKey);
-        } catch (e) {
-            // tslint:disable-next-line
-            console.error('Handled exception:', e);
-        }
-    }
-
     async events(user: OrganizationUserUserDetailsResponse) {
         if (this.modal != null) {
             this.modal.close();
@@ -498,23 +326,6 @@ export class PeopleComponent implements OnInit {
         this.modal.onClosed.subscribe(() => {
             this.modal = null;
         });
-    }
-
-    async resetPaging() {
-        this.pagedUsers = [];
-        this.loadMore();
-    }
-
-    isSearching() {
-        return this.searchService.isSearchable(this.searchText);
-    }
-
-    isPaging() {
-        const searching = this.isSearching();
-        if (searching && this.didScroll) {
-            this.resetPaging();
-        }
-        return !searching && this.users && this.users.length > this.pageSize;
     }
 
     async resetPassword(user: OrganizationUserUserDetailsResponse) {
@@ -540,25 +351,6 @@ export class PeopleComponent implements OnInit {
         this.modal.onClosed.subscribe(() => {
             this.modal = null;
         });
-    }
-
-    checkUser(user: OrganizationUserUserDetailsResponse, select?: boolean) {
-        (user as any).checked = select == null ? !(user as any).checked : select;
-    }
-
-    selectAll(select: boolean) {
-        if (select) {
-            this.selectAll(false);
-        }
-
-        const filteredUsers = this.searchPipe.transform(this.users, this.searchText, 'name', 'email', 'id');
-
-        const selectCount = select && filteredUsers.length > MaxCheckedCount
-            ? MaxCheckedCount
-            : filteredUsers.length;
-        for (let i = 0; i < selectCount; i++) {
-            this.checkUser(filteredUsers[i], select);
-        }
     }
 
     private async showBulkStatus(users: OrganizationUserUserDetailsResponse[], filteredUsers: OrganizationUserUserDetailsResponse[],
@@ -610,43 +402,5 @@ export class PeopleComponent implements OnInit {
                 this.modal.close();
             }
         }
-    }
-
-    private async doConfirmation(user: OrganizationUserUserDetailsResponse, publicKey: Uint8Array) {
-        const orgKey = await this.cryptoService.getOrgKey(this.organizationId);
-        const key = await this.cryptoService.rsaEncrypt(orgKey.key, publicKey.buffer);
-        const request = new OrganizationUserConfirmRequest();
-        request.key = key.encryptedString;
-        await this.apiService.postOrganizationUserConfirm(this.organizationId, user.id, request);
-    }
-
-    private removeUser(user: OrganizationUserUserDetailsResponse) {
-        let index = this.users.indexOf(user);
-        if (index > -1) {
-            this.users.splice(index, 1);
-            this.resetPaging();
-        }
-        if (this.statusMap.has(OrganizationUserStatusType.Accepted)) {
-            index = this.statusMap.get(OrganizationUserStatusType.Accepted).indexOf(user);
-            if (index > -1) {
-                this.statusMap.get(OrganizationUserStatusType.Accepted).splice(index, 1);
-            }
-        }
-        if (this.statusMap.has(OrganizationUserStatusType.Invited)) {
-            index = this.statusMap.get(OrganizationUserStatusType.Invited).indexOf(user);
-            if (index > -1) {
-                this.statusMap.get(OrganizationUserStatusType.Invited).splice(index, 1);
-            }
-        }
-        if (this.statusMap.has(OrganizationUserStatusType.Confirmed)) {
-            index = this.statusMap.get(OrganizationUserStatusType.Confirmed).indexOf(user);
-            if (index > -1) {
-                this.statusMap.get(OrganizationUserStatusType.Confirmed).splice(index, 1);
-            }
-        }
-    }
-
-    private getCheckedUsers() {
-        return this.users.filter(u => (u as any).checked);
     }
 }

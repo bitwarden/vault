@@ -22,6 +22,9 @@
       ],
       "jslib-angular/*": [
         "jslib/angular/src/*"
+      ],
+      "src/*": [
+        "src/*"
       ]
     }
   },

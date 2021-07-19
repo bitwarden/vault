@@ -8,14 +8,14 @@
                 <span class="badge badge-pill badge-info" *ngIf="allCount">{{allCount}}</span>
             </button>
             <button type="button" class="btn btn-outline-secondary"
-                [ngClass]="{active: status == organizationUserStatusType.Invited}"
-                (click)="filter(organizationUserStatusType.Invited)">
+                [ngClass]="{active: status == userStatusType.Invited}"
+                (click)="filter(userStatusType.Invited)">
                 {{'invited' | i18n}}
                 <span class="badge badge-pill badge-info" *ngIf="invitedCount">{{invitedCount}}</span>
             </button>
             <button type="button" class="btn btn-outline-secondary"
-                [ngClass]="{active: status == organizationUserStatusType.Accepted}"
-                (click)="filter(organizationUserStatusType.Accepted)">
+                [ngClass]="{active: status == userStatusType.Accepted}"
+                (click)="filter(userStatusType.Accepted)">
                 {{'accepted' | i18n}}
                 <span class="badge badge-pill badge-warning" *ngIf="acceptedCount">{{acceptedCount}}</span>
             </button>
@@ -86,9 +86,9 @@
                     <td>
                         <a href="#" appStopClick (click)="edit(u)">{{u.email}}</a>
                         <span class="badge badge-secondary"
-                            *ngIf="u.status === organizationUserStatusType.Invited">{{'invited' | i18n}}</span>
+                            *ngIf="u.status === userStatusType.Invited">{{'invited' | i18n}}</span>
                         <span class="badge badge-warning"
-                            *ngIf="u.status === organizationUserStatusType.Accepted">{{'accepted' | i18n}}</span>
+                            *ngIf="u.status === userStatusType.Accepted">{{'accepted' | i18n}}</span>
                         <small class="text-muted d-block" *ngIf="u.name">{{u.name}}</small>
                     </td>
                     <td>
@@ -102,11 +102,11 @@
                         </ng-container>
                     </td>
                     <td>
-                        <span *ngIf="u.type === organizationUserType.Owner">{{'owner' | i18n}}</span>
-                        <span *ngIf="u.type === organizationUserType.Admin">{{'admin' | i18n}}</span>
-                        <span *ngIf="u.type === organizationUserType.Manager">{{'manager' | i18n}}</span>
-                        <span *ngIf="u.type === organizationUserType.User">{{'user' | i18n}}</span>
-                        <span *ngIf="u.type === organizationUserType.Custom">{{'custom' | i18n}}</span>
+                        <span *ngIf="u.type === userType.Owner">{{'owner' | i18n}}</span>
+                        <span *ngIf="u.type === userType.Admin">{{'admin' | i18n}}</span>
+                        <span *ngIf="u.type === userType.Manager">{{'manager' | i18n}}</span>
+                        <span *ngIf="u.type === userType.User">{{'user' | i18n}}</span>
+                        <span *ngIf="u.type === userType.Custom">{{'custom' | i18n}}</span>
                     </td>
                     <td class="table-list-options">
                         <div class="dropdown" appListDropdown>
@@ -117,12 +117,12 @@
                             </button>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="#" appStopClick (click)="reinvite(u)"
-                                    *ngIf="u.status === organizationUserStatusType.Invited">
+                                    *ngIf="u.status === userStatusType.Invited">
                                     <i class="fa fa-fw fa-envelope-o" aria-hidden="true"></i>
                                     {{'resendInvitation' | i18n}}
                                 </a>
                                 <a class="dropdown-item text-success" href="#" appStopClick (click)="confirm(u)"
-                                    *ngIf="u.status === organizationUserStatusType.Accepted">
+                                    *ngIf="u.status === userStatusType.Accepted">
                                     <i class="fa fa-fw fa-check" aria-hidden="true"></i>
                                     {{'confirm' | i18n}}
                                 </a>
@@ -131,7 +131,7 @@
                                     {{'groups' | i18n}}
                                 </a>
                                 <a class="dropdown-item" href="#" appStopClick (click)="events(u)"
-                                    *ngIf="accessEvents && u.status === organizationUserStatusType.Confirmed">
+                                    *ngIf="accessEvents && u.status === userStatusType.Confirmed">
                                     <i class="fa fa-fw fa-file-text-o" aria-hidden="true"></i>
                                     {{'eventLogs' | i18n}}
                                 </a>

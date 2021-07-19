@@ -1,0 +1,38 @@
+<app-navbar></app-navbar>
+<div class="container page-content">
+    <div class="page-header">
+        <h1>{{'setupProvider' | i18n}}</h1>
+    </div>
+    <p>{{'setupProviderDesc' | i18n}}</p>
+
+    <form #form (ngSubmit)="submit()" [appApiAction]="formPromise" ngNativeValidate *ngIf="loading">
+        <h2 class="mt-5">{{'generalInformation' | i18n}}</h2>
+        <div class="row">
+            <div class="form-group col-6">
+                <label for="name">{{'providerName' | i18n}}</label>
+                <input id="name" class="form-control" type="text" name="Name" [(ngModel)]="name" required>
+            </div>
+            <div class="form-group col-6">
+                <label for="billingEmail">{{'billingEmail' | i18n}}</label>
+                <input id="billingEmail" class="form-control" type="text" name="BillingEmail" [(ngModel)]="billingEmail" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-6">
+                <label for="businessName">{{'businessName' | i18n}}</label>
+                <input id="businessName" class="form-control" type="text" name="BusinessName" [(ngModel)]="businessName">
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary btn-submit" [disabled]="form.loading">
+                <i class="fa fa-spinner fa-spin" title="{{'loading' | i18n}}" aria-hidden="true"></i>
+                <span>{{'submit' | i18n}}</span>
+            </button>
+            <button type="button" class="btn btn-outline-secondary" (click)="cancel()" *ngIf="showCancel">
+                {{'cancel' | i18n}}
+            </button>
+        </div>
+    </form>
+</div>
+<app-footer></app-footer>

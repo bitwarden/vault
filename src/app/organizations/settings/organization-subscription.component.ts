@@ -3,9 +3,9 @@ import {
     OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { ToasterService } from 'angular2-toaster';
 
+import { Organization } from 'jslib-common/models/domain/organization';
 import { OrganizationSubscriptionResponse } from 'jslib-common/models/response/organizationSubscriptionResponse';
 
 import { ApiService } from 'jslib-common/abstractions/api.service';
@@ -13,6 +13,7 @@ import { I18nService } from 'jslib-common/abstractions/i18n.service';
 import { MessagingService } from 'jslib-common/abstractions/messaging.service';
 import { PlatformUtilsService } from 'jslib-common/abstractions/platformUtils.service';
 
+import { UserService } from 'jslib-common/abstractions';
 import { PlanType } from 'jslib-common/enums/planType';
 
 @Component({
@@ -33,12 +34,15 @@ export class OrganizationSubscriptionComponent implements OnInit {
     sub: OrganizationSubscriptionResponse;
     selfHosted = false;
 
+    userOrg: Organization;
+
     cancelPromise: Promise<any>;
     reinstatePromise: Promise<any>;
 
     constructor(private apiService: ApiService, private platformUtilsService: PlatformUtilsService,
         private i18nService: I18nService, private toasterService: ToasterService,
-        private messagingService: MessagingService, private route: ActivatedRoute) {
+        private messagingService: MessagingService, private route: ActivatedRoute,
+        private userService: UserService) {
         this.selfHosted = platformUtilsService.isSelfHost();
     }
 
@@ -54,7 +58,9 @@ export class OrganizationSubscriptionComponent implements OnInit {
         if (this.loading) {
             return;
         }
+
         this.loading = true;
+        this.userOrg = await this.userService.getOrganization(this.organizationId);
         this.sub = await this.apiService.getOrganizationSubscription(this.organizationId);
         this.loading = false;
     }

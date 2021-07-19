@@ -85,6 +85,18 @@
                     <app-organizations [vault]="true"></app-organizations>
                 </div>
             </div>
+            <div class="card mt-4" *ngIf="showProviders">
+                <div class="card-header d-flex">
+                    {{'providers' | i18n}}
+                    <a class="ml-auto" href="https://bitwarden.com/help/article/about-providers/"
+                        target="_blank" rel="noopener" appA11yTitle="{{'learnMore' | i18n}}">
+                        <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <app-providers></app-providers>
+                </div>
+            </div>
         </div>
     </div>
 </div>

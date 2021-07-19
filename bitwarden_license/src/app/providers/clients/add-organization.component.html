@@ -1,0 +1,35 @@
+<div class="modal fade" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="addTitle">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addTitle">
+                    {{'addExistingOrganization' | i18n}}
+                </h2>
+                <button type="button" class="close" data-dismiss="modal" appA11yTitle="{{'close' | i18n}}">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="card-body text-center" *ngIf="loading">
+                    <i class="fa fa-spinner fa-spin" title="{{'loading' | i18n}}" aria-hidden="true"></i>
+                    {{'loading' | i18n}}
+                </div>
+                <ng-container *ngIf="!loading">
+                    <table class="table table-hover table-list">
+                        <tr *ngFor="let o of organizations">
+                            <td width="30">
+                                <app-avatar [data]="o.name" size="25" [circle]="true" [fontSize]="14"></app-avatar>
+                            </td>
+                            <td>
+                                {{o.name}}
+                            </td>
+                            <td>
+                                <button class="btn btn-outline-secondary pull-right" (click)="add(o)" [disabled]="formPromise">Add</button>
+                            </td>
+                        </tr>
+                    </table>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

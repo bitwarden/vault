@@ -14,6 +14,12 @@
                         {{'organizationIsDisabled' | i18n}}
                     </div>
                 </div>
+                <div class="ml-3 card border-info text-info bg-transparent" *ngIf="organization.isProviderUser">
+                    <div class="card-body py-2">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        {{'accessingUsingProvider' | i18n : organization.providerName}}
+                    </div>
+                </div>
             </div>
             <ul class="nav nav-tabs" *ngIf="showMenuBar">
                 <li class="nav-item">

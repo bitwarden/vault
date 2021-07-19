@@ -6,10 +6,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppRoutingModule } from '../../../src/app/app-routing.module';
-import { AppComponent } from '../../../src/app/app.component';
-import { OssModule } from '../../../src/app/oss.module';
-import { ServicesModule } from '../../../src/app/services/services.module';
+import { AppRoutingModule } from './app-routing.module';
+
+import { AppComponent } from 'src/app/app.component';
+import { OssRoutingModule } from 'src/app/oss-routing.module';
+import { OssModule } from 'src/app/oss.module';
+import { ServicesModule } from 'src/app/services/services.module';
 
 @NgModule({
     imports: [
@@ -21,6 +23,7 @@ import { ServicesModule } from '../../../src/app/services/services.module';
         InfiniteScrollModule,
         DragDropModule,
         AppRoutingModule,
+        OssRoutingModule,
     ],
     bootstrap: [AppComponent],
 })

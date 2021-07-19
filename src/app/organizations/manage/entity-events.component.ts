@@ -25,6 +25,7 @@ export class EntityEventsComponent implements OnInit {
     @Input() entity: 'user' | 'cipher';
     @Input() entityId: string;
     @Input() organizationId: string;
+    @Input() providerId: string;
     @Input() showUser = false;
 
     loading = true;
@@ -81,7 +82,10 @@ export class EntityEventsComponent implements OnInit {
         let response: ListResponse<EventResponse>;
         try {
             let promise: Promise<any>;
-            if (this.entity === 'user') {
+            if (this.entity === 'user' && this.providerId) {
+                promise = this.apiService.getEventsProviderUser(this.providerId, this.entityId,
+                    dates[0], dates[1], clearExisting ? null : this.continuationToken);
+            } else if (this.entity === 'user') {
                 promise = this.apiService.getEventsOrganizationUser(this.organizationId, this.entityId,
                     dates[0], dates[1], clearExisting ? null : this.continuationToken);
             } else {

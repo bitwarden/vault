@@ -10,8 +10,6 @@ import { Router } from '@angular/router';
 
 import { ToasterService } from 'angular2-toaster';
 
-import { PaymentMethodType } from 'jslib-common/enums/paymentMethodType';
-
 import { ApiService } from 'jslib-common/abstractions/api.service';
 import { CryptoService } from 'jslib-common/abstractions/crypto.service';
 import { I18nService } from 'jslib-common/abstractions/i18n.service';
@@ -23,8 +21,12 @@ import { UserService } from 'jslib-common/abstractions/user.service';
 import { PaymentComponent } from './payment.component';
 import { TaxInfoComponent } from './tax-info.component';
 
+import { EncString } from 'jslib-common/models/domain/encString';
+import { SymmetricCryptoKey } from 'jslib-common/models/domain/symmetricCryptoKey';
+
 import { OrganizationUserStatusType } from 'jslib-common/enums/organizationUserStatusType';
 import { OrganizationUserType } from 'jslib-common/enums/organizationUserType';
+import { PaymentMethodType } from 'jslib-common/enums/paymentMethodType';
 import { PlanType } from 'jslib-common/enums/planType';
 import { PolicyType } from 'jslib-common/enums/policyType';
 import { ProductType } from 'jslib-common/enums/productType';
@@ -33,7 +35,6 @@ import { OrganizationCreateRequest } from 'jslib-common/models/request/organizat
 import { OrganizationKeysRequest } from 'jslib-common/models/request/organizationKeysRequest';
 import { OrganizationUpgradeRequest } from 'jslib-common/models/request/organizationUpgradeRequest';
 
-import { EncString } from 'jslib-common/models/domain';
 import { PlanResponse } from 'jslib-common/models/response/planResponse';
 
 @Component({
@@ -49,6 +50,7 @@ export class OrganizationPlansComponent implements OnInit {
     @Input() showCancel = false;
     @Input() product: ProductType = ProductType.Free;
     @Input() plan: PlanType = PlanType.Free;
+    @Input() providerId: string;
     @Output() onSuccess = new EventEmitter();
     @Output() onCanceled = new EventEmitter();
 
@@ -237,7 +239,7 @@ export class OrganizationPlansComponent implements OnInit {
                     if (this.selfHosted) {
                         orgId = await this.createSelfHosted(key, collectionCt, orgKeys);
                     } else {
-                        orgId = await this.createCloudHosted(key, collectionCt, orgKeys);
+                        orgId = await this.createCloudHosted(key, collectionCt, orgKeys, shareKey[1]);
                     }
 
                     this.toasterService.popAsync('success', this.i18nService.t('organizationCreated'), this.i18nService.t('organizationReadyToGo'));
@@ -296,7 +298,7 @@ export class OrganizationPlansComponent implements OnInit {
         return this.organizationId;
     }
 
-    private async createCloudHosted(key: string, collectionCt: string, orgKeys: [string, EncString]) {
+    private async createCloudHosted(key: string, collectionCt: string, orgKeys: [string, EncString], orgKey: SymmetricCryptoKey) {
         const request = new OrganizationCreateRequest();
         request.key = key;
         request.collectionName = collectionCt;
@@ -327,8 +329,14 @@ export class OrganizationPlansComponent implements OnInit {
                 request.billingAddressState = this.taxComponent.taxInfo.state;
             }
         }
-        const response = await this.apiService.postOrganization(request);
-        return response.id;
+
+        if (this.providerId) {
+            const providerKey = await this.cryptoService.getProviderKey(this.providerId);
+            request.key = (await this.cryptoService.encrypt(orgKey.key, providerKey)).encryptedString;
+            return (await this.apiService.postProviderCreateOrganization(this.providerId, request)).id;
+        } else {
+            return (await this.apiService.postOrganization(request)).id;
+        }
     }
 
     private async createSelfHosted(key: string, collectionCt: string, orgKeys: [string, EncString]) {

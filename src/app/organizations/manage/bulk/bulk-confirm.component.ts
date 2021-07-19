@@ -11,11 +11,10 @@ import { I18nService } from 'jslib-common/abstractions/i18n.service';
 import { OrganizationUserBulkConfirmRequest } from 'jslib-common/models/request/organizationUserBulkConfirmRequest';
 import { OrganizationUserBulkRequest } from 'jslib-common/models/request/organizationUserBulkRequest';
 
-import { OrganizationUserUserDetailsResponse } from 'jslib-common/models/response/organizationUserResponse';
-
 import { OrganizationUserStatusType } from 'jslib-common/enums/organizationUserStatusType';
 
 import { Utils } from 'jslib-common/misc/utils';
+import { BulkUserDetails } from './bulk-status.component';
 
 @Component({
     selector: 'app-bulk-confirm',
@@ -24,10 +23,10 @@ import { Utils } from 'jslib-common/misc/utils';
 export class BulkConfirmComponent implements OnInit {
 
     @Input() organizationId: string;
-    @Input() users: OrganizationUserUserDetailsResponse[];
+    @Input() users: BulkUserDetails[];
 
-    excludedUsers: OrganizationUserUserDetailsResponse[];
-    filteredUsers: OrganizationUserUserDetailsResponse[];
+    excludedUsers: BulkUserDetails[];
+    filteredUsers: BulkUserDetails[];
     publicKeys: Map<string, Uint8Array> = new Map();
     fingerprints: Map<string, string> = new Map();
     statuses: Map<string, string> = new Map();
@@ -36,19 +35,18 @@ export class BulkConfirmComponent implements OnInit {
     done: boolean = false;
     error: string;
 
-    constructor(private cryptoService: CryptoService, private apiService: ApiService,
+    constructor(protected cryptoService: CryptoService, protected apiService: ApiService,
       private i18nService: I18nService) { }
 
     async ngOnInit() {
-        this.excludedUsers = this.users.filter(user => user.status !== OrganizationUserStatusType.Accepted);
-        this.filteredUsers = this.users.filter(user => user.status === OrganizationUserStatusType.Accepted);
+        this.excludedUsers = this.users.filter(u => !this.isAccepted(u));
+        this.filteredUsers = this.users.filter(u => this.isAccepted(u));
 
         if (this.filteredUsers.length <= 0) {
             this.done = true;
         }
 
-        const request = new OrganizationUserBulkRequest(this.filteredUsers.map(user => user.id));
-        const response = await this.apiService.postOrganizationUsersPublicKey(this.organizationId, request);
+        const response = await this.getPublicKeys();
 
         for (const entry of response.data) {
             const publicKey = Utils.fromB64ToArray(entry.key);
@@ -65,21 +63,20 @@ export class BulkConfirmComponent implements OnInit {
     async submit() {
         this.loading = true;
         try {
-            const orgKey = await this.cryptoService.getOrgKey(this.organizationId);
+            const key = await this.getCryptoKey();
             const userIdsWithKeys: any[] = [];
             for (const user of this.filteredUsers) {
                 const publicKey = this.publicKeys.get(user.id);
                 if (publicKey == null) {
                     continue;
                 }
-                const key = await this.cryptoService.rsaEncrypt(orgKey.key, publicKey.buffer);
+                const encryptedKey = await this.cryptoService.rsaEncrypt(key.key, publicKey.buffer);
                 userIdsWithKeys.push({
                     id: user.id,
-                    key: key.encryptedString,
+                    key: encryptedKey.encryptedString,
                 });
             }
-            const request = new OrganizationUserBulkConfirmRequest(userIdsWithKeys);
-            const response = await this.apiService.postOrganizationUserBulkConfirm(this.organizationId, request);
+            const response = await this.postConfirmRequest(userIdsWithKeys);
 
             response.data.forEach(entry => {
                 const error = entry.error !== '' ? entry.error : this.i18nService.t('bulkConfirmMessage');
@@ -91,5 +88,23 @@ export class BulkConfirmComponent implements OnInit {
             this.error = e.message;
         }
         this.loading = false;
+    }
+
+    protected isAccepted(user: BulkUserDetails) {
+        return user.status === OrganizationUserStatusType.Accepted;
+    }
+
+    protected async getPublicKeys() {
+        const request = new OrganizationUserBulkRequest(this.filteredUsers.map(user => user.id));
+        return await this.apiService.postOrganizationUsersPublicKey(this.organizationId, request);
+    }
+
+    protected getCryptoKey() {
+        return this.cryptoService.getOrgKey(this.organizationId);
+    }
+
+    protected async postConfirmRequest(userIdsWithKeys: any[]) {
+        const request = new OrganizationUserBulkConfirmRequest(userIdsWithKeys);
+        return await this.apiService.postOrganizationUserBulkConfirm(this.organizationId, request);
     }
 }
