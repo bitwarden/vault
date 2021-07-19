@@ -83,6 +83,10 @@
                                 <i class="fa fa-fw fa-file-text-o" aria-hidden="true"></i>
                                 {{'eventLogs' | i18n}}
                             </a>
+                            <a class="dropdown-item" href="#" appStopClick (click)="copyUri(c)" *ngIf="!c.isDeleted">
+                                <i class="fa fa-fw fa-link" aria-hidden="true"></i>
+                                {{'copyUri' | i18n}}
+                            </a>
                             <a class="dropdown-item" href="#" appStopClick (click)="restore(c)" *ngIf="c.isDeleted">
                                 <i class="fa fa-fw fa-undo" aria-hidden="true"></i>
                                 {{'restore' | i18n}}

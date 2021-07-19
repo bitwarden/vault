@@ -96,7 +96,10 @@ export class VaultComponent implements OnInit, OnDestroy {
                 }
                 await this.groupingsComponent.load();
 
-                if (qParams == null) {
+                if (qParams == null || qParams.cipherId) {
+                    if (qParams.cipherId) {
+                        this.editCipherById(qParams.cipherId);
+                    }
                     this.groupingsComponent.selectedAll = true;
                     await this.ciphersComponent.reload();
                 } else {
@@ -269,34 +272,7 @@ export class VaultComponent implements OnInit, OnDestroy {
     }
 
     editCipher(cipher: CipherView) {
-        if (this.modal != null) {
-            this.modal.close();
-        }
-
-        const factory = this.componentFactoryResolver.resolveComponentFactory(ModalComponent);
-        this.modal = this.cipherAddEditModalRef.createComponent(factory).instance;
-        const childComponent = this.modal.show<AddEditComponent>(AddEditComponent, this.cipherAddEditModalRef);
-
-        childComponent.organization = this.organization;
-        childComponent.cipherId = cipher == null ? null : cipher.id;
-        childComponent.onSavedCipher.subscribe(async (c: CipherView) => {
-            this.modal.close();
-            await this.ciphersComponent.refresh();
-        });
-        childComponent.onDeletedCipher.subscribe(async (c: CipherView) => {
-            this.modal.close();
-            await this.ciphersComponent.refresh();
-        });
-        childComponent.onRestoredCipher.subscribe(async (c: CipherView) => {
-            this.modal.close();
-            await this.ciphersComponent.refresh();
-        });
-
-        this.modal.onClosed.subscribe(() => {
-            this.modal = null;
-        });
-
-        return childComponent;
+        return this.editCipherById(cipher == null ? null : cipher.id);
     }
 
     cloneCipher(cipher: CipherView) {
@@ -330,6 +306,37 @@ export class VaultComponent implements OnInit, OnDestroy {
         this.modal.onClosed.subscribe(() => {
             this.modal = null;
         });
+    }
+
+    private editCipherById(cipherId: string) {
+        if (this.modal != null) {
+            this.modal.close();
+        }
+
+        const factory = this.componentFactoryResolver.resolveComponentFactory(ModalComponent);
+        this.modal = this.cipherAddEditModalRef.createComponent(factory).instance;
+        const childComponent = this.modal.show<AddEditComponent>(AddEditComponent, this.cipherAddEditModalRef);
+
+        childComponent.organization = this.organization;
+        childComponent.cipherId = cipherId == null ? null : cipherId;
+        childComponent.onSavedCipher.subscribe(async (c: CipherView) => {
+            this.modal.close();
+            await this.ciphersComponent.refresh();
+        });
+        childComponent.onDeletedCipher.subscribe(async (c: CipherView) => {
+            this.modal.close();
+            await this.ciphersComponent.refresh();
+        });
+        childComponent.onRestoredCipher.subscribe(async (c: CipherView) => {
+            this.modal.close();
+            await this.ciphersComponent.refresh();
+        });
+
+        this.modal.onClosed.subscribe(() => {
+            this.modal = null;
+        });
+
+        return childComponent;
     }
 
     private clearFilters() {

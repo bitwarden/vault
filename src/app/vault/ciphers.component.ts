@@ -9,6 +9,7 @@ import {
 import { ToasterService } from 'angular2-toaster';
 
 import { CipherService } from 'jslib-common/abstractions/cipher.service';
+import { EnvironmentService } from 'jslib-common/abstractions/environment.service';
 import { EventService } from 'jslib-common/abstractions/event.service';
 import { I18nService } from 'jslib-common/abstractions/i18n.service';
 import { PasswordRepromptService } from 'jslib-common/abstractions/passwordReprompt.service';
@@ -46,7 +47,8 @@ export class CiphersComponent extends BaseCiphersComponent implements OnDestroy 
         protected i18nService: I18nService, protected platformUtilsService: PlatformUtilsService,
         protected cipherService: CipherService, protected eventService: EventService,
         protected totpService: TotpService, protected userService: UserService,
-        protected passwordRepromptService: PasswordRepromptService) {
+        protected passwordRepromptService: PasswordRepromptService,
+        private environmentService: EnvironmentService) {
         super(searchService);
         this.pageSize = 200;
     }
@@ -159,6 +161,20 @@ export class CiphersComponent extends BaseCiphersComponent implements OnDestroy 
         } else if (typeI18nKey === 'securityCode') {
             this.eventService.collect(EventType.Cipher_ClientCopiedCardCode, cipher.id);
         }
+    }
+
+    async copyUri(cipher: CipherView) {
+        let vaultUrl = this.environmentService.getWebVaultUrl() + '/#';
+        if (cipher.organizationId != null) {
+            vaultUrl += '/organizations/' + cipher.organizationId;
+        }
+        this.platformUtilsService.copyToClipboard(
+            vaultUrl + '/vault?cipherId=' + cipher.id,
+            { window: window }
+        );
+
+        this.toasterService.popAsync('info', null,
+            this.i18nService.t('valueCopied', this.i18nService.t('uri')));
     }
 
     selectAll(select: boolean) {
